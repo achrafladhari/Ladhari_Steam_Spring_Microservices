@@ -1,0 +1,25 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  data:
+    mongodb:
+      username: achraf
+      password: ladhari02
+      host: localhost
+      port: 27017
+      database: library
+      authentication-database: admin
+      auto-index-creation: true
+springdoc:
+  api-docs:
+    path: /library/v3/api-docs
+  swagger-ui:
+    path: /library/swagger-ui.html
+
+server:
+  port: 8020

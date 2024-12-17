@@ -1,0 +1,31 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8060
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/steam
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+application:
+  config:
+    user-url: http://localhost:8222/api/v1/users
+    games-url: http://localhost:8222/api/v1/games
+    payment-url: http://localhost:8222/api/v1/payments
+    library-url: http://localhost:8222/api/v1/library
+springdoc:
+  api-docs:
+    path: /order/v3/api-docs
+  swagger-ui:
+    path: /order/swagger-ui.html
