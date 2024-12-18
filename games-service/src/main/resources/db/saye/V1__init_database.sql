@@ -14,6 +14,7 @@ create table if not exists games
     description        varchar(255),
     name               varchar(255),
     price              double precision not null,
+    image              varchar(255),
     category_id        integer
     constraint fk1mtsbur82frn64de7balymq9s
     references category
