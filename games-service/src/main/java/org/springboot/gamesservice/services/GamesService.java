@@ -10,6 +10,8 @@ import org.springboot.gamesservice.games.*;
 import org.springboot.gamesservice.mapper.GameMapper;
 import org.springboot.gamesservice.repository.GameRepo;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,15 @@ import java.util.List;
 public class GamesService {
     private final GameRepo repository;
     private final GameMapper mapper;
+
+
+    //find all by pagination
+    public Page<GamesApp> getGamesPagination(
+            String name,
+            Pageable pageable
+    ){
+        return repository.findByNameContaining(name,pageable);
+    }
 
     //IMAGEEEE
     private String giveMeNewName(String oldName)

@@ -3,11 +3,11 @@ package org.springboot.userservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.springboot.userservice.services.UserService;
 import org.springboot.userservice.user.UserApp;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +29,18 @@ public class UserAdminController {
     @GetMapping
     public ResponseEntity<List<UserApp>> findAll(){
         return ResponseEntity.ok(userService.findAllUsers());
+    }
+
+    //get Users with pagination
+
+    @GetMapping("/pagination")
+    public ResponseEntity<Page<UserApp>> findAllByNameContaining(
+          @RequestParam(required = false) String name,
+          @RequestParam(defaultValue = "0") int page,
+          @RequestParam(defaultValue = "10") int size
+    ){
+        Pageable pageable= PageRequest.of(page,size);
+        return ResponseEntity.ok(userService.getUsersPagination(name,pageable));
     }
 
 

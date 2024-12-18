@@ -10,6 +10,8 @@ import org.springboot.userservice.request.UserRequest;
 import org.springboot.userservice.user.LoginRequest;
 import org.springboot.userservice.user.UserApp;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -69,6 +71,16 @@ public class UserService {
         var user = userRepo.findByUsername(request.username())
                 .orElseThrow();
         return jwtService.generateToken(user);
+    }
+    //getUsersBy pagination
+    public Page<UserApp> getUsersPagination(
+            String name, Pageable pageable
+    ){
+        if (name == null){
+            return
+                    userRepo.findAll(pageable);
+        }
+        return userRepo.findByNameContaining(name, pageable);
     }
 
     //add new user to system REGISTER!
