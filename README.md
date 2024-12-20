@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a microservices-based architecture built using Spring Boot, inspired by platforms like Steam. Its primary goal is to provide users with a platform to browse, purchase, and manage games. The architecture is designed for scalability, modularity, and ease of maintenance.
+This project is a microservices-based architecture built using Spring Boot, inspired by platforms like Steam. Its primary goal is to provide users with a platform to browse and purchase games. The architecture is designed for scalability, modularity, and ease of maintenance.
 
 ---
 
