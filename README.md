@@ -34,7 +34,7 @@ This document describes the authentication and authorization flow in a microserv
 4. **Request Forwarding**:  
    Upon successful JWT validation, the API Gateway forwards the request to the appropriate service for processing.
 
-## Summary
+#### Summary
 
 This flow is essential for ensuring secure access to microservices. It ensures that only authorized users can access services, and any invalid JWTs result in an appropriate error response.
 
