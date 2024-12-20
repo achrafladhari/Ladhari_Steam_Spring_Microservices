@@ -10,7 +10,7 @@ This project is a microservices-based architecture built using Spring Boot, insp
 
 ### Architecture Diagram
 
-![Architecture Diagram](screens/architecture.png)
+![Architecture Diagram](screens/architecture_final.png)
 
 ### Class Diagram
 
