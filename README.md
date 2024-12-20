@@ -105,6 +105,18 @@ All secured routes require a valid JWT token. Obtain the token by authenticating
 |                    | GET              | `localhost:8222/api/v1/users/{user-id}`                  | Get user details by ID               | Yes     |
 |                    | GET              | `localhost:8222/api/v1/users/username/{user-id}`         | Get user details by username         | Yes     |
 
+### SWAGGER TABLE
+
+The table provides a concise overview of available Swagger endpoints for various services within a system. Each row lists a service name, the HTTP method (all being "SWAGGER" in this case), the specific endpoint URL, and whether the endpoint is secured. None of the endpoints are secured, as indicated in the "Secured" column. These endpoints correspond to the local environment, with URLs pointing to Swagger UI interfaces for managing Users, Games, Library, Orders, and Payments.
+
+| Swager Service Name | Method  | Endpoint                                         | Secured |
+| ------------------- | --------| ------------------------------------------------ | ------- |
+| **SWGGER USER**     | SWAGGER | `localhost:8222/users/swagger-ui/index.html`     | NO      |
+| **SWGGER Games**    | SWAGGER | `localhost:8222/games/swagger-ui/index.html`     | NO      |
+| **SWGGER Library**  | SWAGGER | `localhost:8222/library/swagger-ui/index.html`   | NO      |
+| **SWGGER Orders**   | SWAGGER | `localhost:8222/order/swagger-ui/index.html`     | NO      |
+| **SWGGER Payments** | SWAGGER | `localhost:8222/payment/swagger-ui/index.html`   | NO      |
+
 ---
 
 ## Images
@@ -134,5 +146,7 @@ All secured routes require a valid JWT token. Obtain the token by authenticating
 - [JWT](https://jwt.io/) - Token-based authentication
 - [Docker](https://docs.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
+
 ---
 
+Achraf BEN CHEIKH LADHARI. © 2024 All rights reserved.
