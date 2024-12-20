@@ -21,6 +21,7 @@ import java.util.List;
 public class LibraryApp {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String username;
     private List<Games> games;
 }

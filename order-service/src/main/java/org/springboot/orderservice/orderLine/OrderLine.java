@@ -1,5 +1,6 @@
 package org.springboot.orderservice.orderLine;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springboot.orderservice.order.OrderApp;
@@ -16,9 +17,9 @@ public class OrderLine {
     @Id
     @GeneratedValue
     private Integer id;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "order_id")
     private OrderApp order;
     private Integer gameId;
-    private double quantity;
 }

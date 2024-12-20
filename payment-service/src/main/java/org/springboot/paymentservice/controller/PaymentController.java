@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springboot.paymentservice.payment.PaymentRequest;
 import org.springboot.paymentservice.services.PaymentService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/payments")
@@ -22,4 +19,5 @@ public class PaymentController {
     ) {
         return ResponseEntity.ok(this.service.createPayment(request));
     }
+
 }

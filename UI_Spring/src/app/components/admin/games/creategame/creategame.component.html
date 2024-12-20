@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <div *ngIf="error && id" class="alert alert-danger">
+    {{ error }}
+  </div>
+  <div *ngIf="success && id" class="alert alert-success">
+    <a class="nav-link" [routerLink]="['/games']">{{ success }}</a>
+  </div>
+
+  <h2 class="text-center" *ngIf="id!=undefined"> Update Game </h2>
+  <h2 class="text-center" *ngIf="id==undefined"> Add a new game </h2>
+  <div class="col-6 mx-auto">
+    <div class="alert alert-danger" role="alert" *ngIf="err!=undefined">
+      Error occured!
+    </div>
+    <input [(ngModel)]='game.name'  type="text" class="form-control m-1" placeholder="name">
+    <input  [(ngModel)]='game.description' type="text" class="form-control m-1" placeholder="description">
+    <input  [(ngModel)]='game.avaiblity' type="number" class="form-control m-1" placeholder="availablity">
+    <input  [(ngModel)]='game.price' type="number" class="form-control m-1" placeholder="price">
+    <!--  LIST DEROULANTE  -->
+    <select [(ngModel)]="game.categoryId" class="form-control m-1">
+      <option  *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+    <!--  LIST DEROULANTE  -->
+    <input *ngIf="id==undefined" (change)='select($event)' type="file"  class="form-control m-1" placeholder="image">
+    <button *ngIf="id==undefined" (click)='addGame()' class="btn btn-dark form-control m-1">Add game</button>
+    <button (click)='modify()' *ngIf="id!=undefined" class="btn btn-dark form-control m-1">Update game</button>
+  </div>
+</div>

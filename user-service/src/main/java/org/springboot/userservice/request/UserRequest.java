@@ -15,6 +15,6 @@ public record UserRequest (
          String email,
          String username,
          String password,
-         Address address
+         String address
 ) {
 }

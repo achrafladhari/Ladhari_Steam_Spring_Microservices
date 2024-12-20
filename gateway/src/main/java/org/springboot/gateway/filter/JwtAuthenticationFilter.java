@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter implements GatewayFilter {
-
+    Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final JwtUtil jwtUtil;
     private static final List<String> OPEN_ENDPOINTS = Arrays.asList(
             "/api/v1/auth/register",
@@ -43,11 +43,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-        exchange.getRequest().mutate().headers(httpHeaders -> {
-            httpHeaders.remove("X-Forwarded-For");
-            httpHeaders.remove("X-Forwarded-Proto");
-            // Remove other large headers if needed
-        }).build();
 
         //List.of("/api/v1/auth/login", "/api/v1/auth/register", "/eureka", "/api/v1/games","/api/v1/games/{game-id}",WHITE_LIST_URL);
 
@@ -66,6 +61,8 @@ public class JwtAuthenticationFilter implements GatewayFilter {
                 jwtUtil.validateToken(token);
                 List<String> roles = jwtUtil.getRolesFromToken(token);
                 List<String> requiredRoles = exchange.getAttribute("requiredRoles");
+               // logger.info(requiredRoles.toString());
+                logger.info(roles.toString());
                 if (requiredRoles == null || !userHasRequiredRoles(roles, requiredRoles)) {
                     return onAccessDenied(exchange);
                 }

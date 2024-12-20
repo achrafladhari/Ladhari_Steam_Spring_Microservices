@@ -30,7 +30,6 @@ public class OrderApp {
     private String username;
     @OneToMany(mappedBy = "order")
     private List<OrderLine> orderLines;
-
     @CreatedDate
     @Column(updatable = false,nullable = false)
     private LocalDateTime createdAt;

@@ -27,7 +27,15 @@
               <li class="nav-item @@about">
                 <a class="nav-link" [routerLink]="['/about']">About</a>
               </li>
-          
+              <li class="nav-item @@login" *ngIf="_auth.isLoggedIn()==true && _auth.getUserDataFromToken().sub=='admin'">
+                <a class="nav-link" [routerLink]="['/games']">Games</a>
+              </li>
+              <li class="nav-item @@login" *ngIf="_auth.isLoggedIn()==true && _auth.getUserDataFromToken().sub=='admin'">
+                <a class="nav-link" [routerLink]="['/categories']">Categories</a>
+              </li>
+              <li class="nav-item @@login" *ngIf="_auth.isLoggedIn()==true && _auth.getUserDataFromToken().sub=='admin'">
+                <a class="nav-link" [routerLink]="['/users']">Users</a>
+              </li>
               <li class="nav-item @@login" *ngIf="_auth.isLoggedIn()==false">
                 <a class="nav-link" [routerLink]="['/login']">Login</a>
               </li>
@@ -37,17 +45,19 @@
               <li class="nav-item @@account" *ngIf="_auth.isLoggedIn()==true">
                 <a class="nav-link" [routerLink]="['/user',_auth.getUserDataFromToken().sub]">My Account</a>
               </li>
-              <li class="nav-item @@account" *ngIf="_auth.isLoggedIn()==true">
+              <li class="nav-item @@inventory" *ngIf="_auth.isLoggedIn()==true">
                 <a class="nav-link" [routerLink]="['/inventory',_auth.getUserDataFromToken().sub]">Inventory</a>
+              </li>
+              <li class="nav-item @@orders" *ngIf="_auth.isLoggedIn()==true">
+                <a class="nav-link" [routerLink]="['/orders',_auth.getUserDataFromToken().sub]">Orders</a>
               </li>
               <li class="nav-item @@logout" *ngIf="_auth.isLoggedIn()==true">
                 <a class="nav-link" (click)="logout()">Log out</a>
               </li>
-        
             </ul>
-            
-    
-            
+            <a class="navbar-brand font-weight-bold mb-0" [routerLink]="['cart']" title="Shopping cart">
+              <i class="ti ti-basket" style="font-size: 35px;"></i>
+            </a>
           </div>
         </nav>
       </div>

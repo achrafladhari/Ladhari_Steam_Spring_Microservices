@@ -27,17 +27,34 @@ public class LibraryService {
         libraryRepo.save(libraryToSave);
     }
 
+    public LibraryApp getLibrary(String username){
+        return libraryRepo.findByUsername(username).orElse(null);
+    }
+    public String deleteLibrary(String username){
+        LibraryApp libraryToDelete = getLibrary(username);
+        libraryRepo.delete(libraryToDelete);
+        return libraryToDelete.getId();
+    }
     public void updateLibrary(PurchaseRequest request) {
         LibraryApp libraryToUpdate = libraryRepo.findByUsername(request.username()).orElse(null);
-        for (Games game:request.games()){
-            if (libraryToUpdate.getGames()==null){
-                libraryToUpdate.setGames(new ArrayList<>());
-                libraryToUpdate.getGames().add(game);
-            }
-            else if (!libraryToUpdate.getGames().contains(game)){
+
+        if (libraryToUpdate == null) {
+            throw new IllegalArgumentException("Library not found for username: " + request.username());
+        }
+
+        if (libraryToUpdate.getGames() == null) {
+            libraryToUpdate.setGames(new ArrayList<>());
+        }
+
+        List<Games> gamesToProcess = request.games() != null ? request.games() : new ArrayList<>();
+
+        for (Games game : gamesToProcess) {
+            if (!libraryToUpdate.getGames().contains(game)) {
                 libraryToUpdate.getGames().add(game);
             }
         }
+
         libraryRepo.save(libraryToUpdate);
     }
+
 }

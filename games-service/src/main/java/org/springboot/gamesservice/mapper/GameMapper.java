@@ -23,13 +23,12 @@ public class GameMapper {
                 .build();
     }
 
-    public GamePurchaseResponse toGamePurchaseResponse(GamesApp game, double quantity) {
+    public GamePurchaseResponse toGamePurchaseResponse(GamesApp game) {
         return new GamePurchaseResponse(
                 game.getId(),
                 game.getName(),
                 game.getDescription(),
-                game.getPrice(),
-                quantity
+                game.getPrice()
         );
     }
 }

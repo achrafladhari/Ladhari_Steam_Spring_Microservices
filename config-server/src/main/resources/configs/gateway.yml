@@ -3,71 +3,16 @@ server:
 spring:
   cloud:
     gateway:
-      httpclient:
-        maxHeaderSize: 16384
+      discovery:
+        locator:
+          enabled: true
       globalcors:
         corsConfigurations:
           '[/**]':
             allowedOrigins: "*"
             allowedMethods:
-            - GET
-            - POST
-            - PUT
-            - DELETE
-      discovery:
-        locator:
-          enabled: true
-      routes:
-        # ROUTES FOR USER SERVICE
-        - id: user-service
-          uri: lb:http://USER-SERVICE
-          predicates:
-            - Path=/api/v1/users/**
-          #AUTH ROUTES
-        - id: user-service
-          uri: lb:http://USER-SERVICE
-          predicates:
-            - Path=/api/v1/auth/**
-          #ADMIN ROUTES
-        - id: user-service
-          uri: lb:http://USER-SERVICE
-          predicates:
-            - Path=/api/v1/user/admin/**
-
-        # ROUTES FOR ORDER SERVICE
-        - id: order-service
-          uri: lb:http://ORDER-SERVICE
-          predicates:
-            - Path=/api/v1/orders/**
-        - id: order-service
-          uri: lb:http://ORDER-SERVICE
-          predicates:
-            - Path=/api/v1/order-lines/**
-
-
-        # ROUTES FOR GAME SERVICE
-        - id: games-service
-          uri: lb:http://GAMES-SERVICE
-          predicates:
-            - Path=/api/v1/games/**
-
-          # ROUTES FOR ADMIN GAME SERVICE
-        - id: games-service
-          uri: lb:http://GAMES-SERVICE
-          predicates:
-            - Path=/api/v1/game/admin/**
-        - id: games-service
-          uri: lb:http://GAMES-SERVICE
-          predicates:
-            - Path=/api/v1/category/admin/**
-        # ROUTES FOR PAYMENT SERVICE
-        - id: payment-service
-          uri: lb:http://PAYMENT-SERVICE
-          predicates:
-            - Path=/api/v1/payments/**
-
-        # ROUTES FOR LIBRARY SERVICE
-        - id: library-service
-          uri: lb:http://LIBRARY-SERVICE
-          predicates:
-            - Path=/api/v1/library/**
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders: "*"

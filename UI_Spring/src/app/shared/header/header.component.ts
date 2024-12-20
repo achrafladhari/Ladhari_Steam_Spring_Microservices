@@ -1,16 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import {GamesService} from "../../services/games.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit{
-  constructor(public _auth:AuthService,private router:Router){}
+  username:any
+  constructor(public _auth:AuthService,private router:Router){
+  }
+  ngOnInit(
+  ) {
+    this.username=this._auth.getUserDataFromToken().sub
+  }
 
-  ngOnInit(): void {}
   logout(){
     localStorage.removeItem('token');
     this.router.navigate(['/login']);

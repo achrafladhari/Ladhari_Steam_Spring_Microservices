@@ -26,7 +26,7 @@ public class UserApp implements UserDetails {
     private String username;
     private String email;
     private String password;
-    private Address address;
+    private String address;
     private Role role;
     private String image;
     @Override

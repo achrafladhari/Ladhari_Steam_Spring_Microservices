@@ -5,11 +5,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springboot.gamesservice.games.GamesRequest;
 import org.springboot.gamesservice.services.GamesService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,13 +19,15 @@ import java.io.IOException;
 public class AdminGameController {
 
     private final GamesService service;
-
+    Logger logger = Logger.getLogger(AdminGameController.class.getName());
     //CRUD GAMES
     @PostMapping
     public ResponseEntity<Integer> createGame(
-            @ModelAttribute @Valid GamesRequest request
+            @ModelAttribute GamesRequest request
             , @RequestParam("file") MultipartFile file
     )  throws IOException {
+        //System.out.println(request);
+        logger.info(request.toString());
         return ResponseEntity.ok(service.createGame(request,file));
     }
 

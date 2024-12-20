@@ -31,7 +31,6 @@ public class GatewayConfig {
                         .uri("lb://user-service"))
 
                 .route("user-service", r -> r.path("/api/v1/auth/**")
-                        .filters(f -> f.filter(filter))
                         .uri("lb://user-service"))
 
                 .route("user-service", r -> r.path("/api/v1/user/admin/**")
@@ -46,12 +45,20 @@ public class GatewayConfig {
                 .route("user-service", r -> r.path("/users/v3/api-docs/**")
                         .uri("lb://user-service")) // Forward to the user-service
 
-
                 //GAMES SERVICE ROUTES
                 .route("games-service", r -> r.path("/api/v1/games/purchase")
                         .filters(f -> f
                                 .filter(new RoleAssignmentFilter(List.of("USER", "ADMIN")))
                                 .filter(filter))
+                        .uri("lb://games-service"))
+
+                .route("games-service", r -> r.path("/api/v1/games")
+                        .uri("lb://games-service"))
+
+                .route("games-service", r -> r.path("/api/v1/games/pagination")
+                        .uri("lb://games-service"))
+
+                .route("games-service", r -> r.path("/api/v1/games/{games-id}")
                         .uri("lb://games-service"))
 
                 .route("games-service", r -> r.path("/api/v1/game/admin/**")

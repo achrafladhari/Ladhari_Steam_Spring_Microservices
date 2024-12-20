@@ -9,8 +9,7 @@
         <input [(ngModel)]='user.name' type="text" class="form-control m-1" placeholder="name">
         <input  [(ngModel)]='user.email' type="email" class="form-control m-1" placeholder="email">
         <input  [(ngModel)]='user.username' type="text" class="form-control m-1" placeholder="username">
-        <input  [(ngModel)]='user.address.street' type="text" class="form-control m-1" placeholder="street">
-        <input  [(ngModel)]='user.address.zipCode' type="text" class="form-control m-1" placeholder="zip code">
+        <input  [(ngModel)]='user.address' type="text" class="form-control m-1" placeholder="address">
         <input [(ngModel)]='user.password'  type="password" class="form-control m-1" placeholder="password">
         <input (change)='select($event)' type="file"  class="form-control m-1" placeholder="image">
         <button (click)='register()' class="btn btn-dark form-control m-1">Register</button>

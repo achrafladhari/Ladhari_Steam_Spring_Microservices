@@ -5,7 +5,6 @@ public record PurchaseResponse(
         Integer gameId,
         String name,
         String description,
-        double price,
-        double quantity
+        double price
 ) {
 }

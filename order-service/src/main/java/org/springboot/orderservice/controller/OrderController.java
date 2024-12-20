@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springboot.orderservice.order.OrderApp;
 import org.springboot.orderservice.order.OrderRequest;
+import org.springboot.orderservice.order.ResponseOrder;
 import org.springboot.orderservice.services.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<Integer> createOrder(
+    public ResponseEntity<ResponseOrder> createOrder(
             @RequestBody @Valid OrderRequest request,
             @RequestHeader("Authorization") String token
             ){

@@ -8,6 +8,7 @@ import org.springboot.userservice.mapper.UserMapper;
 import org.springboot.userservice.repository.UserRepo;
 import org.springboot.userservice.request.UserRequest;
 import org.springboot.userservice.user.LoginRequest;
+import org.springboot.userservice.user.ResponseMapper;
 import org.springboot.userservice.user.UserApp;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -61,7 +62,7 @@ public class UserService {
 
 
     //login
-    public String login(LoginRequest request){
+    public ResponseMapper login(LoginRequest request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.username(),
@@ -70,8 +71,10 @@ public class UserService {
         );
         var user = userRepo.findByUsername(request.username())
                 .orElseThrow();
-        return jwtService.generateToken(user);
+        var token = jwtService.generateToken(user);
+        return new ResponseMapper(token);
     }
+
     //getUsersBy pagination
     public Page<UserApp> getUsersPagination(
             String name, Pageable pageable
@@ -84,7 +87,7 @@ public class UserService {
     }
 
     //add new user to system REGISTER!
-    public String createUser(UserRequest userRequest,MultipartFile mf) throws IOException {
+    public ResponseMapper createUser(UserRequest userRequest,MultipartFile mf) throws IOException {
         UserApp userToSave= mapper.toUser(userRequest);
         if (!mf.isEmpty()){
             userToSave.setImage(saveImage2(mf));
@@ -92,7 +95,7 @@ public class UserService {
         userRepo.save(userToSave);
         var token = jwtService.generateToken(userToSave);
         libraryClient.createLibrary(userToSave,token);
-        return token ;
+        return new ResponseMapper(token) ;
     }
 
     //GET ACUTAL USER NOT USED !!
@@ -105,6 +108,19 @@ public class UserService {
             return null;
         }
     }
+
+    //update a user from the system !!
+    public ResponseMapper updateUserByUsername(UserRequest userRequest, String username) {
+        UserApp userToUpdate=new UserApp();
+        userToUpdate.setId(username);
+        userToUpdate = userRepo.findByUsername(userToUpdate.getId()).orElseThrow(()-> new UserNotFoundException(
+                "User with id not found"
+        ));
+        mergeUser(userToUpdate,userRequest);
+        userRepo.save(userToUpdate);
+        return new ResponseMapper (userToUpdate.getId());
+    }
+
 
     //update a user from the system !!
     public String updateUser(UserRequest userRequest, String id) {
@@ -138,7 +154,7 @@ public class UserService {
         if (StringUtils.isNotBlank(userRequest.username())){
             userToUpdate.setUsername(userRequest.username());
         }
-        if (userRequest.address() != null){
+        if (StringUtils.isNotBlank(userRequest.address())){
             userToUpdate.setAddress(userRequest.address());
         }
     }
@@ -158,7 +174,9 @@ public class UserService {
                 .isPresent();
     }
 
-    public String deleteUser(String id) {
+    public String deleteUser(String id,String token) {
+        var userToDelete=userRepo.findById(id);
+        libraryClient.deleteLibrary(userToDelete.get().getUsername(),token);
        userRepo.deleteById(id);
        return "Deleted user with id: " + id;
     }

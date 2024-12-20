@@ -1,0 +1,23 @@
+<section class="page-header section-sm">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+          <div class="col-lg-3 col-md-4 col-sm-5 col-6">
+            <img class="img-fluid rounded" [src]="'uploads/user/'+user.image" alt="{{user.name}}" width="250" height="250">
+          </div>
+          <div class="col-lg-9 col-md-12">
+            <h1 class="h3 text-dark mb-3">Update {{user.name}}!</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+
+<div class="container mt-4">
+  <div class="col-6 mx-auto">
+    <input [(ngModel)]='user.name' type="text" class="form-control m-1" placeholder="name">
+    <input  [(ngModel)]='user.email' type="text" class="form-control m-1" placeholder="email">
+    <input [(ngModel)]='user.password'  type="password" class="form-control m-1" placeholder="password">
+    <button (click)='modify()' class="btn btn-dark form-control m-1">Update</button>
+  </div>
+</div>

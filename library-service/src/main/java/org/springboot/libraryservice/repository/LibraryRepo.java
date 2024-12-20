@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface LibraryRepo extends MongoRepository<LibraryApp, String> {
 
     Optional<LibraryApp> findByUsername(String username);
+    String deleteByUsername(String username);
 }

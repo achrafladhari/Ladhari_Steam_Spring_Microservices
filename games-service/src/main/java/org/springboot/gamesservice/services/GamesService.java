@@ -149,13 +149,13 @@ public class GamesService {
         for (int i = 0; i < storedGames.size(); i++) {
             var game = storedGames.get(i);
             var gameRequest = sortedRequest.get(i);
-            if (game.getAvaiblity() < gameRequest.quantity()) {
+            if (game.getAvaiblity() < 1) {
                 throw new GamesPurchaseException("Insufficient stock quantity for game with ID:: " + gameRequest.gameId());
             }
-            var newAvailableQuantity = game.getAvaiblity() - gameRequest.quantity();
+            var newAvailableQuantity = game.getAvaiblity() - 1;
             game.setAvaiblity(newAvailableQuantity);
             repository.save(game);
-            purchasedGames.add(mapper.toGamePurchaseResponse(game, gameRequest.quantity()));
+            purchasedGames.add(mapper.toGamePurchaseResponse(game));
         }
         return purchasedGames;
     }

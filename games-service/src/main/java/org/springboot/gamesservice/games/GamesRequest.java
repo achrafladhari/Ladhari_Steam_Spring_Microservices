@@ -17,7 +17,6 @@ public record GamesRequest (
       //   @Positive(message = "Game price sould be positive!")
          double price,
      //    @NotNull (message = "Game category is required !")
-         String image,
          Integer categoryId
 ){
 }

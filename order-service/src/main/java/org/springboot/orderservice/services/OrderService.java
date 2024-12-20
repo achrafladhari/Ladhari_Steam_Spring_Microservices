@@ -3,6 +3,7 @@ package org.springboot.orderservice.services;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springboot.orderservice.library.PurchaseLibrary;
 import org.springboot.orderservice.mapper.OrderMapper;
 import org.springboot.orderservice.order.OrderApp;
 import org.springboot.orderservice.order.OrderRequest;
+import org.springboot.orderservice.order.ResponseOrder;
 import org.springboot.orderservice.orderLine.OrderLineRequestWithoutId;
 import org.springboot.orderservice.payment.PaymentClient;
 import org.springboot.orderservice.payment.PaymentRequest;
@@ -23,6 +25,9 @@ import org.springboot.orderservice.user.UserClient;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import java.util.List;
+
+import static jakarta.xml.bind.DatatypeConverter.parseString;
+import static java.lang.Double.parseDouble;
 
 @Service
 @RequiredArgsConstructor
@@ -35,19 +40,32 @@ public class OrderService {
     private final GameClient gameClient;
     private final OrderLineService orderLineService;
     private final LibraryClient libraryClient;
+    Logger logger = LoggerFactory.getLogger(OrderService.class);
 
-
-    double amount=0;
     @Transactional
-    public Integer createOrder(OrderRequest request, String token) {
+    public ResponseOrder createOrder(OrderRequest request, String token) {
+        double amount=0;
         var username = request.username();
+        var library=libraryClient.getLibrary(username,token);
         var user = this.userClient.findUserByUsername(username,token)
                 .orElseThrow(() -> new BusinessException("Cannot create order:: No user exists with the provided username"));
+        if (library.games()!=null) {
+            for (PurchaseRequest gamesRequest : request.games()) {
+            // Check if any game in the library has the same gameId as the requested game
+            for (PurchaseResponse libraryGame : library.games()) {
+                if (libraryGame.gameId().equals(gamesRequest.gameId())) {
+                    return new ResponseOrder("Game already exists with id: " + gamesRequest.gameId());
+                }
+            }
+        }}
+
 
         var purchasedGames = gameClient.purchaseGames(request.games(),token);
 
         for (PurchaseResponse purchaseResponse : purchasedGames) {
-             amount = amount + purchaseResponse.price()*purchaseResponse.quantity();
+             amount = amount + purchaseResponse.price();
+             logger.info(""+amount);
+             logger.info(""+purchaseResponse.price());
         }
 
         var order = this.repository.save(mapper.toOrder(request,amount));
@@ -56,8 +74,7 @@ public class OrderService {
             orderLineService.saveOrderLine(
                     new OrderLineRequestWithoutId(
                             order.getId(),
-                            purchaseRequest.gameId(),
-                            purchaseRequest.quantity()
+                            purchaseRequest.gameId()
                     )
             );
         }
@@ -74,8 +91,7 @@ public class OrderService {
 
         paymentClient.requestOrderPayment(paymentRequest,token);
         libraryClient.purchaseLibrary(purchaseLibrary,token);
-
-        return order.getId();
+        return new ResponseOrder("Order created with ID: "+ order.getId());
     }
 
     public List<OrderApp> findAllOrders() {

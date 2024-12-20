@@ -16,6 +16,8 @@ export class AuthService {
   }
 
 
+
+
   login(user:any){
     return this.http.post(this.url+'login',user);
   }
@@ -28,7 +30,6 @@ export class AuthService {
       return false;
     }
   }
-
   getUserDataFromToken(){
     let token=localStorage.getItem('token');
     if(token){

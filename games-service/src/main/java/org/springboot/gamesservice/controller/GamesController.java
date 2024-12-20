@@ -44,7 +44,7 @@ public class GamesController {
     public ResponseEntity<Page<GamesApp>> findAllByNameContaining(
             @RequestParam(required = false) String name,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "5") int size
     ){
         Pageable pageable= PageRequest.of(page,size);
         return ResponseEntity.ok(service.getGamesPagination(name,pageable));

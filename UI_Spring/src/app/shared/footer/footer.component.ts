@@ -6,10 +6,8 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.css'
 })
-export class FooterComponent implements OnInit{
+export class FooterComponent{
   constructor(public _auth:AuthService){}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+
 
 }

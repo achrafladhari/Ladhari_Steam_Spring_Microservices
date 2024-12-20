@@ -20,13 +20,13 @@ public class AdminCategoryController {
     //CRUD CATEGORY
     @PostMapping
     public ResponseEntity<Integer> createCategory(
-            @RequestBody @Valid CategoryRequest request
+            @RequestBody CategoryRequest request
     ) {
         return ResponseEntity.ok(service.createCategory(request));
     }
     @PutMapping("/{category-id}")
     public ResponseEntity<Integer> updateCategory(
-            @PathVariable("category-id") Integer id, @RequestBody @Valid CategoryRequest request
+            @PathVariable("category-id") Integer id, @RequestBody CategoryRequest request
     ){
         return ResponseEntity.ok(service.updateCategory(request,id));
     }
