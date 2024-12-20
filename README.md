@@ -6,7 +6,7 @@ This project is a microservices-based architecture built using Spring Boot, insp
 
 ---
 
-## Images
+## Architectures
 
 ### Architecture Diagram
 
