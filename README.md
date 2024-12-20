@@ -6,6 +6,43 @@ This project is a microservices-based architecture built using Spring Boot, insp
 
 ---
 
+## Images
+
+### Architecture Diagram
+
+![Architecture Diagram](screens/spring_boot_architecture.png)
+
+### Class Diagram
+
+![Class Diagram](screens/spring_boot_classdiagram.png)
+
+### Authentication and Authorization Flow
+
+This document describes the authentication and authorization flow in a microservices architecture using an API Gateway. The flow ensures secure communication, proper validation of user credentials, and controlled access to microservices.
+
+#### Flow Steps
+
+1. **Login Request**:  
+   The user sends a login request to the User Service, which processes the login and generates a JWT.
+
+2. **API Gateway Validation**:  
+   For all subsequent requests, the Front End includes the JWT in the authorization header. The API Gateway validates the JWT for authentication and authorization.
+
+3. **JWT Validation**:  
+   If the JWT is valid, the API Gateway forwards the request to the intended service. If invalid, a 401 Unauthorized response is returned.
+
+4. **Request Forwarding**:  
+   Upon successful JWT validation, the API Gateway forwards the request to the appropriate service for processing.
+
+## Summary
+
+This flow is essential for ensuring secure access to microservices. It ensures that only authorized users can access services, and any invalid JWTs result in an appropriate error response.
+
+![Authentication Flow](screens/architecture_auth.gif)
+
+
+---
+
 ## Installation
 
 Follow the instructions below to set up the project locally.
@@ -75,7 +112,6 @@ Make sure you have the following tools installed:
 
 All secured routes require a valid JWT token. Obtain the token by authenticating with the `/auth/login` endpoint in the `users` service. The token must be included in the `Authorization` header of all requests to secured endpoints.
 
-![Authentication Flow](screens/architecture_auth.gif)
 
 ### Endpoints
 
@@ -119,17 +155,6 @@ The table provides a concise overview of available Swagger endpoints for various
 | **SWGGER Orders**   | SWAGGER | `localhost:8222/order/swagger-ui/index.html`     | NO      |
 | **SWGGER Payments** | SWAGGER | `localhost:8222/payment/swagger-ui/index.html`   | NO      |
 
----
-
-## Images
-
-### Architecture Diagram
-
-![Architecture Diagram](screens/spring_boot_architecture.png)
-
-### Class Diagram
-
-![Class Diagram](screens/spring_boot_classdiagram.png)
 
 ---
 
