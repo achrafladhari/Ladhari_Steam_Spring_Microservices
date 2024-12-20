@@ -75,6 +75,8 @@ Make sure you have the following tools installed:
 
 All secured routes require a valid JWT token. Obtain the token by authenticating with the `/auth/login` endpoint in the `users` service. The token must be included in the `Authorization` header of all requests to secured endpoints.
 
+![Authentication Flow](screens/architecture_auth.gif)
+
 ### Endpoints
 
 | Service            | Method           | Endpoint                                                 | Description                          | Secured |
