@@ -1,4 +1,4 @@
-# Steam LADHARI - A Spring Boot Microservices Project
+# LADHARI Steam - Spring Boot Microservices
 
 ## Description
 
