@@ -8,6 +8,93 @@ This project is a microservices-based architecture built using Spring Boot, insp
 
 ## Architectures
 
+### Overview
+This platform provides an intuitive way for users to manage their game library, order games, and handle payments. The system is built around key entities and interactions that ensure seamless user experiences.
+
+---
+
+### Features
+- **User Registration**: Automatically creates a library for every registered user.
+- **Game Library**: Each user has exactly one library, containing all purchased games.
+- **Game Ordering**: Users can order multiple games, and the system ensures no duplicate purchases.
+- **Payment Processing**: Links payments to orders, with one payment per order.
+- **Duplicate Game Check**: Prevents users from purchasing the same game twice.
+
+---
+
+### System Workflow
+
+#### 1. User Registration
+- When a user registers on the platform, a library is automatically created for them.
+- Each user has only one library associated with their account.
+
+#### 2. Ordering Games
+- Users can order one or multiple games.
+- The system validates the order:
+  - Checks if any of the games in the order already exist in the user's library.
+  - If the user already owns a game, the order is canceled, and a message is displayed: "You already own this game."
+- If all games in the order are valid, the system creates an order and corresponding order lines.
+
+#### 3. Payment
+- Each order generates a single payment entry.
+- The system ensures that payment is processed successfully before completing the order.
+
+#### 4. Updating the Library
+- Once the payment is confirmed, the games in the order are added to the user's library.
+- The library is updated to include the new games.
+
+---
+
+### System Entities
+
+#### User-Service
+- **Purpose**: Manages user accounts and registration.
+- **Key Action**: Automatically creates a library for each new user.
+
+#### Library-Service
+- **Purpose**: Manages the user's game collection.
+- **Key Actions**:
+  - Automatically creates a library during registration.
+  - Updates the library after successful orders.
+  - Prevents duplicate games from being added.
+
+#### Orders-Service
+- **Purpose**: Manages orders and order lines.
+- **Key Actions**:
+  - Creates orders and corresponding order lines.
+  - Validates that the user does not already own the games being ordered.
+
+#### Payment-Service
+- **Purpose**: Handles payments for orders.
+- **Key Actions**:
+  - Links each payment to a single order.
+  - Ensures payments are successful before completing orders.
+
+#### Games-Service
+- **Purpose**: Provides details about available games.
+- **Key Actions**:
+  - Supplies game information to other services.
+
+---
+
+### Key Business Rules
+1. **Library Creation**: Each user has exactly one library created during registration.
+2. **Order Validation**:
+   - An order cannot include games already in the user's library.
+   - If a duplicate game is detected, the order is canceled, and the user is notified.
+3. **Payment Linking**:
+   - Each order is associated with one payment.
+   - Orders are only completed after successful payment.
+4. **Library Updates**:
+   - Upon successful payment, the games in the order are added to the user's library.
+
+---
+
+### Error Handling
+- **Duplicate Game in Order**:
+  - If the user attempts to order a game already in their library, the order is canceled.
+  - A message is displayed: "You already own this game."
+
 ### Architecture Diagram
 
 ![Architecture Diagram](screens/architecture_final.png)
