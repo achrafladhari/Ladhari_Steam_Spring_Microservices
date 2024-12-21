@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar config-server.jar
 
 EXPOSE 8888
 
-CMD [ "java","-jar","config-app.jar" ]
+CMD [ "java","-jar","config-server.jar" ]

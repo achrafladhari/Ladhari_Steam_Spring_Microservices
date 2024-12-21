@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar user-service.jar
 
 EXPOSE 8090
 
-CMD [ "java","-jar","config-app.jar" ]
+CMD [ "java","-jar","user-service.jar" ]

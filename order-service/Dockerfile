@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar order-service.jar
 
 EXPOSE 8060
 
-CMD [ "java","-jar","config-app.jar" ]
+CMD [ "java","-jar","order-service.jar" ]

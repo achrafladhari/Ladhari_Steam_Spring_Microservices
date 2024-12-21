@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar discovery-service.jar
 
 EXPOSE 8761
 
-CMD [ "java","-jar","config-app.jar" ]
+CMD [ "java","-jar","discovery-service.jar" ]
