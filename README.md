@@ -38,7 +38,7 @@ This document describes the authentication and authorization flow in a microserv
 
 This flow is essential for ensuring secure access to microservices. It ensures that only authorized users can access services, and any invalid JWTs result in an appropriate error response.
 
-![Authentication Flow](screens/architecture_auth.gif)
+![Authentication Flow](screens/arch_auth.gif)
 
 
 ---
