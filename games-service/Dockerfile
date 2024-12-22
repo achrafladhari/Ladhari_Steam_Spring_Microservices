@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar games-service.jar
 
 EXPOSE 8070
 
-CMD [ "java","-jar","games-service.jar" ]
+ENTRYPOINT [ "java","-jar","games-service.jar" ]

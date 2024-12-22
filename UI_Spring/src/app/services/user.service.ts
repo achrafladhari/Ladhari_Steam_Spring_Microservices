@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthService} from "./auth.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,21 @@ export class UserService {
 
   token = localStorage.getItem('token');
 
+  //get images!
+
+  getUserImageByUsername(username:any): Observable<Blob>{
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.token}`,
+    });
+    return this.http.get(`${this.url}${username}/image`,{headers, responseType:'blob'});
+  }
+
+
   updateById(id:any,user:any){
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    return this.http.put(`${this.url}/update/${id}`,user,{headers});
+    return this.http.put(`${this.url}update/${id}`,user,{headers});
   }
   getAllUsers(){
     const headers = new HttpHeaders({
@@ -52,7 +63,7 @@ export class UserService {
 
 
   getUserByUsername(username: any) {
-    console.log(username)
+   // console.log(username)
 
     // headers
     const headers = new HttpHeaders({

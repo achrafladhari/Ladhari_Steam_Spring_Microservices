@@ -10,6 +10,8 @@ import org.springboot.gamesservice.games.*;
 import org.springboot.gamesservice.mapper.GameMapper;
 import org.springboot.gamesservice.repository.GameRepo;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,24 @@ public class GamesService {
     }
 
     //IMAGEEEE
+
+    // GET IMAGES :
+    public Resource getGameImage(Integer gameId) throws IOException {
+        // Fetch the image name from the database or user object based on userId
+        GamesApp game = repository.findById(gameId)
+                .orElseThrow(() -> new RuntimeException("Game not found"));
+        String imageName = game.getImage();
+
+        // Construct the image file path
+        Path imagePath = Paths.get(uploadDir).resolve(imageName);
+
+        // Check if the image exists
+        if (Files.exists(imagePath)) {
+            return new FileSystemResource(imagePath);
+        } else {
+            throw new RuntimeException("Image not found for game " + gameId);
+        }
+    }
     private String giveMeNewName(String oldName)
     {
 

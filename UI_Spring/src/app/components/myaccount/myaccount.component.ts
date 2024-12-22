@@ -15,7 +15,7 @@ export class MyaccountComponent implements OnInit {
     email:'',
     password:'',
   }
-
+  image: string | ArrayBuffer | null = '';
   username:any;
   constructor(private _user:UserService, private router:Router,private act:ActivatedRoute){}
 
@@ -25,10 +25,25 @@ export class MyaccountComponent implements OnInit {
     this._user.getUserByUsername(this.username).subscribe(res=>{
       this.user=res;
       this.user.password='';
-    //  console.log(this.user)
     })
+
+  this.loadImage()
   }
 
+  loadImage(): void {
+    this._user.getUserImageByUsername(this.username).subscribe(
+      (imageBlob: Blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.image = reader.result; // Sets the image URL for binding
+        };
+        reader.readAsDataURL(imageBlob);
+      },
+      (error) => {
+        console.error('Error loading image', error);
+      }
+    );
+  }
   modify(){
     this.username=this.act.snapshot.paramMap.get('username');
     this._user.updateByUsername(this.username,this.user).subscribe(res=>{

@@ -5,12 +5,17 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springboot.gamesservice.games.*;
 import org.springboot.gamesservice.services.GamesService;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -49,4 +54,18 @@ public class GamesController {
         Pageable pageable= PageRequest.of(page,size);
         return ResponseEntity.ok(service.getGamesPagination(name,pageable));
     }
+
+    // get image
+    @GetMapping("/{gameId}/image")
+    public ResponseEntity<Resource> getGameImage(@PathVariable Integer gameId) throws IOException {
+        Resource image = service.getGameImage(gameId);
+        // Set the appropriate content type based on the file extension
+        String contentType = Files.probeContentType(image.getFile().toPath());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")
+                .body(image);
+    }
+
 }

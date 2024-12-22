@@ -14,7 +14,7 @@
       </div>
       <div class="col-lg-12">
         <div class="mb-5 text-center">
-          <img class="w-100 h-auto rounded" [src]="'/uploads/games/'+game.image" alt="{{game.title}}" width="970" height="500">
+          <img class="w-100 h-auto rounded" [src]="'http://localhost:8222/api/v1/games/' + game.id +'/image'" alt="{{game.title}}" width="970" height="500">
         </div>
       </div>
       <div class="col-lg-8 post-content-block order-0 order-lg-2">

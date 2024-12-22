@@ -8,9 +8,14 @@ import org.springboot.userservice.services.UserService;
 import org.springboot.userservice.user.ResponseMapper;
 import org.springboot.userservice.user.UserApp;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.core.io.Resource;
 
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 @RestController
@@ -46,6 +51,19 @@ public class UserController {
         return ResponseEntity.ok(userService.deleteUser(userId,token));
     }
 
+
+    // get image
+    @GetMapping("/{username}/image")
+    public ResponseEntity<Resource> getUserImage(@PathVariable String username) throws IOException {
+        Resource image = userService.getImageByUserId(username);
+        // Set the appropriate content type based on the file extension
+        String contentType = Files.probeContentType(image.getFile().toPath());
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")
+                .body(image);
+    }
 
     //get user by id
     @GetMapping("/{user-id}")

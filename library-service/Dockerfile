@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar library-service.jar
 
 EXPOSE 8020
 
-CMD [ "java","-jar","library-service.jar" ]
+ENTRYPOINT [ "java","-jar","library-service.jar" ]

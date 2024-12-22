@@ -6,14 +6,9 @@ eureka:
       defaultZone: http://localhost:8761/eureka
 
 uploads:
-  dir: UI_Spring/public/uploads/user
+  dir: user-service/src/main/resources/static/uploads/user
 
 spring:
-  web:
-    resources:
-      static-locations:
-        file:~/Desktop/spring_project/uploads/user/
-
   data:
     mongodb:
       username: achraf

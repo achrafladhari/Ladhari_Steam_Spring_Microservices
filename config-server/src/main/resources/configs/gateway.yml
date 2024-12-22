@@ -1,3 +1,9 @@
+eureka:
+  instance:
+    hostname: config-server
+  client:
+    service-url:
+      defaultZone: http://discovery-service:8761/eureka
 server:
   port: 8222
 spring:

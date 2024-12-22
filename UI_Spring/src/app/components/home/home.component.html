@@ -43,7 +43,7 @@
           <div class="card-body">
             <a class="d-block" [routerLink]="['/games/', item.id]" title="{{ item.name }}">
               <div class="post-image position-relative">
-                <img class="w-100 h-auto rounded" [src]="'/uploads/games/' + item.image" alt="{{ item.name }}" width="970" height="500">
+                <img class="w-100 h-auto rounded" [src]="'http://localhost:8222/api/v1/games/' + item.id +'/image'" alt="{{ item.name }}" width="970" height="500">
               </div>
             </a>
             <h2 class="mb-3 post-title">{{ item.name }}</h2>

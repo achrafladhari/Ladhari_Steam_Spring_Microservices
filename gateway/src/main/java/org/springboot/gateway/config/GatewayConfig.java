@@ -55,6 +55,9 @@ public class GatewayConfig {
                 .route("games-service", r -> r.path("/api/v1/games")
                         .uri("lb://games-service"))
 
+                .route("games-service", r -> r.path("/api/v1/games/{gameId}/image")
+                        .uri("lb://games-service"))
+
                 .route("games-service", r -> r.path("/api/v1/games/pagination")
                         .uri("lb://games-service"))
 

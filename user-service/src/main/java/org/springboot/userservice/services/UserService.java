@@ -11,6 +11,8 @@ import org.springboot.userservice.user.LoginRequest;
 import org.springboot.userservice.user.ResponseMapper;
 import org.springboot.userservice.user.UserApp;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,7 +49,23 @@ public class UserService {
         String secondpart = oldName.substring(oldName.lastIndexOf(".") + 1);
         return firstpart + System.currentTimeMillis() + "." + secondpart;
     }
+// GET IMAGES :
+public Resource getImageByUserId(String username) throws IOException {
+    // Fetch the image name from the database or user object based on userId
+    UserApp user = userRepo.findByUsername(username)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+    String imageName = user.getImage();
 
+    // Construct the image file path
+    Path imagePath = Paths.get(uploadDir).resolve(imageName);
+
+    // Check if the image exists
+    if (Files.exists(imagePath)) {
+        return new FileSystemResource(imagePath);
+    } else {
+        throw new RuntimeException("Image not found for user " + username);
+    }
+}
     @Value("${uploads.dir}")
     private String uploadDir;
     public String saveImage2(MultipartFile mf) throws IOException {

@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar order-service.jar
 
 EXPOSE 8060
 
-CMD [ "java","-jar","order-service.jar" ]
+ENTRYPOINT [ "java","-jar","order-service.jar" ]

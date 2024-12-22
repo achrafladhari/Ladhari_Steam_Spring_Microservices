@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar payment-service.jar
 
 EXPOSE 8050
 
-CMD [ "java","-jar","payment-service.jar" ]
+ENTRYPOINT [ "java","-jar","payment-service.jar" ]

@@ -17,4 +17,4 @@ COPY --from=builder /app/target/*.jar gateway.jar
 
 EXPOSE 8222
 
-CMD [ "java","-jar","gateway.jar" ]
+ENTRYPOINT [ "java","-jar","gateway.jar" ]
