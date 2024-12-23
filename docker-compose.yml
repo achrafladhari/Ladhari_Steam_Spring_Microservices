@@ -1,16 +1,21 @@
 services:
+
   config-server:
     build:
       context: ./config-server
     container_name: config-server
     ports:
       - 8888:8888
+    volumes:
+      - config-server:/app
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost","8888"]
       interval: 30s
       retries: 3
       start_period: 10s
       timeout: 10s
+    networks:
+      - microservices
 
   discovery-service:
     build:
@@ -18,6 +23,8 @@ services:
     container_name: discovery-service
     ports:
       - 8761:8761
+    volumes:
+      - discovery-service:/app
     environment:
       EUREKA_HOSTNAME_DISCOVERY: discovery-service
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
@@ -27,6 +34,8 @@ services:
       retries: 3
       start_period: 10s
       timeout: 10s
+    networks:
+      - microservices
     depends_on:
       config-server:
         condition: service_healthy
@@ -37,6 +46,8 @@ services:
     container_name: gateway
     ports:
       - 8222:8222
+    volumes:
+      - gateway:/app
     environment:
       EUREKA_HOSTNAME_GATEWAY: gateway
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
@@ -47,6 +58,8 @@ services:
       retries: 3
       start_period: 10s
       timeout: 10s
+    networks:
+      - microservices
     depends_on:
       discovery-service:
         condition: service_healthy
@@ -63,6 +76,10 @@ services:
       EUREKA_HOSTNAME_GAMES: games-service
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
       EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
+    volumes:
+      - games-service:/app
+    networks:
+      - microservices
     depends_on:
       gateway:
         condition: service_healthy
@@ -71,11 +88,15 @@ services:
     build:
       context: ./library-service
     container_name: library-service
+    volumes:
+      - library-service:/app
     environment:
       EUREKA_HOSTNAME_LIBRARY: library-service
       MONGO_HOST: mongo_db
       EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    networks:
+      - microservices
     depends_on:
       gateway:
         condition: service_healthy
@@ -84,6 +105,8 @@ services:
     build:
       context: ./order-service
     container_name: order-service
+    volumes:
+      - order-service:/app
     environment:
       USER_URL: http://user-service:8222/api/v1/users
       LIBRARY_URL: http://library-service:8222/api/v1/library
@@ -95,6 +118,8 @@ services:
       EUREKA_HOSTNAME_ORDER: order-service
       EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    networks:
+      - microservices
     depends_on:
       gateway:
         condition: service_healthy
@@ -103,6 +128,8 @@ services:
     build:
       context: ./payment-service
     container_name: payment-service
+    volumes:
+      - payment-service:/app
     environment:
       DB_URL: jdbc:postgresql://ms_pg_sql:5432/steam
       DB_USERNAME: postgres
@@ -110,6 +137,9 @@ services:
       EUREKA_HOSTNAME_PAYMENT: payment-service
       EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+
+    networks:
+      - microservices
     depends_on:
       gateway:
         condition: service_healthy
@@ -118,12 +148,16 @@ services:
     build:
       context: ./user-service
     container_name: user-service
+    volumes:
+      - user-service:/app
     environment:
       LIBRARY_URL: http://library-service:8222/api/v1/library
       EUREKA_HOSTNAME_USER: user-service
       MONGO_HOST: mongo_db
       EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
       CONFIG_SERVER_URL: optional:configserver:http://config-server:8888
+    networks:
+      - microservices
     depends_on:
       gateway:
         condition: service_healthy
@@ -138,17 +172,23 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=achraf
       - MONGO_INITDB_ROOT_PASSWORD=ladhari02
+    networks:
+      - microservices
 
   mongo-express:
     image: mongo-express
     container_name: mongo_express
     restart: always
+    volumes:
+      - mongo-express:/data
     ports:
       - 8081:8081
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=achraf
       - ME_CONFIG_MONGODB_ADMINPASSWORD=ladhari02
       - ME_CONFIG_MONGODB_SERVER=mongodb
+    networks:
+      - microservices
 
   postgresql:
     container_name: ms_pg_sql
@@ -188,3 +228,12 @@ volumes:
   mongo:
   postgres:
   pgadmin:
+  user-service:
+  order-service:
+  payment-service:
+  library-service:
+  gateway:
+  config-server:
+  discovery-service:
+  games-service:
+  mongo-express:
