@@ -1,18 +1,18 @@
 eureka:
   instance:
-    hostname: config-server
+    hostname: ${EUREKA_HOSTNAME_ORDER:localhost}
   client:
     service-url:
-      defaultZone: http://discovery-service:8761/eureka
+      defaultZone: ${EUREKA_DEFAULT_ZONE:http://localhost:8761/eureka}
 
 server:
   port: 8060
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/steam
-    username: postgres
-    password: postgres
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/steam}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
   jpa:
     hibernate:
       ddl-auto: update
@@ -20,10 +20,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 application:
   config:
-    user-url: http://localhost:8222/api/v1/users
-    games-url: http://localhost:8222/api/v1/games
-    payment-url: http://localhost:8222/api/v1/payments
-    library-url: http://localhost:8222/api/v1/library
+    user-url: ${USER_URL:http://localhost:8222/api/v1/users}
+    games-url: ${GAMES_URL:http://localhost:8222/api/v1/games}
+    payment-url: ${PAYMENT_URL:http://localhost:8222/api/v1/payments}
+    library-url: ${LIBRARY_URL:http://localhost:8222/api/v1/library}
 springdoc:
   api-docs:
     path: /order/v3/api-docs

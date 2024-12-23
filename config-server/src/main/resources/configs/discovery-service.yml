@@ -1,6 +1,6 @@
 eureka:
   instance:
-     hostname: config-server
+     hostname: ${EUREKA_HOSTNAME_DISCOVERY:localhost}
   client:
     register-with-eureka: false
     fetch-registry: false
@@ -9,3 +9,12 @@ eureka:
 
 server:
   port: 8761
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
