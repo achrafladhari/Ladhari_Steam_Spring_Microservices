@@ -1,26 +1,68 @@
 pipeline {
     agent any
-
+    tools {
+        maven 'maven-399'
+    }
     triggers {
         pollSCM('* * * * *')
     }
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        IMAGE_NAME_SERVER = 'chrayef/mern-server'
-        IMAGE_NAME_CLIENT = 'chrayef/mern-client'
+        IMAGE_NAME_CONFIG_SERVER = 'chrayef/config-server'
+        IMAGE_NAME_DISCOVERY_SERVICE = 'chrayef/discovery-service'
+        IMAGE_NAME_GATEWAY = 'chrayef/gateway'
+        IMAGE_NAME_USER_SERVICE = 'chrayef/user-service'
+        IMAGE_NAME_GAMES_SERVICE = 'chrayef/games-service'
+        IMAGE_NAME_ORDER_SERVICE = 'chrayef/order-service'
+        IMAGE_NAME_LIBRARY_SERVICE = 'chrayef/library-service'
+        IMAGE_NAME_PAYMENT_SERVICE = 'chrayef/payment-service'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'git@github.com:achrafladhari/mern-app.git',
+                    url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
                     credentialsId: 'github_ssh'
             }
         }
-
-        stage('Build Server Image') {
+        stage('Build Config Server Image') {
+           // when { changeset "config-server/*"}
+            steps {
+                dir('config-server') {
+                    script {
+                        dockerImageConfigServer = docker.build("${IMAGE_NAME_CONFIG_SERVER}")
+                    }
+                }
+            }
+        }
+        stage('Build Discovery Service Image') {
+           // when { changeset "discovery-service/*"}
+            steps {
+                dir('discovery-service') {
+                    script {
+                        dockerImageDiscoveryService = docker.build("${IMAGE_NAME_DISCOVERY_SERVICE}")
+                    }
+                }
+            }
+        }
+        stage('Test Gateway Image') {
+            //when { changeset "gateway/*"}
+            steps {
+                dir('gateway') {
+                    script{
+                        sh '''mvn clean verify sonar:sonar \
+                                -Dsonar.projectKey=gateway \
+                                -Dsonar.projectName='gateway' \
+                                -Dsonar.host.url=http://localhost:9000 \
+                                -Dsonar.token=sqp_5f02e6acce83a46036b3a1a051bc486ec5087ba7 \
+                            '''
+                    }
+                }
+            }
+        }
+       /* stage('Build Server Image') {
             when { changeset "server/*"}
             steps {
                 dir('server') {
@@ -89,10 +131,10 @@ pipeline {
                     }
                 }
             }
-        }
+        }*/
 
     }
-    post {
+    /*post {
         always {
             script {
                 echo 'Cleanup phase!'
@@ -108,5 +150,5 @@ pipeline {
                 echo 'Cleanup Succefully done!'
             }
         }
-    }
+    }*/
 }
