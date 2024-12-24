@@ -18,7 +18,8 @@ import {CategoryComponent} from "./components/admin/category/category.component"
 import {AddmodifyComponent} from "./components/admin/users/addmodify/addmodify.component";
 import {UsersComponent} from "./components/admin/users/users.component";
 
-const routes: Routes = [  {path:'',redirectTo:'/home',pathMatch:'full'},
+const routes: Routes = [
+  {path:'',redirectTo:'/home',pathMatch:'full'},
   {path:'home',component:HomeComponent},
   {path:'games/:id',component:GameDetailComponent},
   {path:'inventory/:username'/*,canActivate:[AuthGuard]*/,component:InventoryComponent},
@@ -44,10 +45,7 @@ const routes: Routes = [  {path:'',redirectTo:'/home',pathMatch:'full'},
   {path:'orders/:username'/*,canActivate:[AuthGuard]*/,component:OrdersComponent},
   {path:'payments/:username'/*,canActivate:[AuthGuard]*/,component:PaymentsComponent},
 
-  //{path:'create',canActivate:[AuthGuard],component:CreatearticleComponent},*/
-  /* {path:'about',component:AboutComponent},
-   {path:'privacy',component:PrivacyComponent},
-   {path:'author/:id',component:AuthorComponent},*/
+
   {path:'login',component:LoginComponent},
   {path:'register',component:RegisterComponent},
   {path:'**',component:NotfoundComponent}

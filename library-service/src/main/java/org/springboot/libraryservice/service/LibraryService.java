@@ -30,6 +30,7 @@ public class LibraryService {
     public LibraryApp getLibrary(String username){
         return libraryRepo.findByUsername(username).orElse(null);
     }
+
     public String deleteLibrary(String username){
         LibraryApp libraryToDelete = getLibrary(username);
         libraryRepo.delete(libraryToDelete);

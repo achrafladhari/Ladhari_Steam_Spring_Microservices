@@ -43,6 +43,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -69,6 +75,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
+
               "buildTarget": "UI_Spring:build:production"
             },
             "development": {

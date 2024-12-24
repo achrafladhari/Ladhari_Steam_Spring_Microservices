@@ -2,6 +2,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {isPlatformBrowser} from "@angular/common";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,9 @@ export class GamesService {
   private cart: any[] = [];
   private cartSubject = new BehaviorSubject<any[]>(this.cart);
   onAddToCart$ = this.cartSubject.asObservable();
-  private gameUrl = 'http://localhost:8222/api/v1/games';
-  private gameAdminUrl = 'http://localhost:8222/api/v1/game';
-  private categoryUrl = 'http://localhost:8222/api/v1/category';
+  private gameUrl = environment.apiUrl+'/games';
+  private gameAdminUrl = environment.apiUrl+'/game';
+  private categoryUrl = environment.apiUrl+'/category';
   token = localStorage.getItem('token');
 
   // CATEGORY
@@ -27,6 +28,11 @@ export class GamesService {
     });
     return this.http.delete(this.categoryUrl+'/admin/'+id,{headers})
   }
+
+    //get images!
+    GetGamesImages(imageId:any): Observable<Blob>{
+      return this.http.get(`${this.gameUrl}${imageId}/image`,{responseType:'blob'});
+    }
 
 
   addCategory(category:any){

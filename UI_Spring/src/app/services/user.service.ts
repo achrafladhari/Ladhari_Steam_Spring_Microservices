@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {AuthService} from "./auth.service";
 import {Observable} from "rxjs";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,8 @@ export class UserService {
   constructor(private http:HttpClient) {
   }
 
-  private url = 'http://localhost:8222/api/v1/users/'
-  private urlAdmin = 'http://localhost:8222/api/v1/user/admin'
+  private url = environment.apiUrl+'/users/'
+  private urlAdmin = environment.apiUrl+'/user/admin'
 
   token = localStorage.getItem('token');
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 export class OrdersService {
 
   constructor(private http:HttpClient) { }
-  private url='http://localhost:8222/api/v1/orders'
+  private url=environment.apiUrl+'/orders'
   token = localStorage.getItem('token');
 
   createOrder(order:any){

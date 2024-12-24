@@ -1,0 +1,5 @@
+spring:
+  config:
+    import: ${CONFIG_SERVER_URL:optional:configserver:http://config-server:8888}
+  application:
+    name: gateway

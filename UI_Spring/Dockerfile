@@ -1,0 +1,13 @@
+#Build
+FROM node:18.19.1-alpine as BUILD
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install
+COPY . .
+#Prod
+RUN npm run build --prod
+FROM nginx:stable-alpine as PROD
+COPY --from=BUILD /app/dist/ui-spring /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
