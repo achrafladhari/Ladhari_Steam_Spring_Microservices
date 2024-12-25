@@ -64,10 +64,10 @@ pipeline {
             }
         }
         stage('Run Discovery Service') {
-                            withEnv([
+            steps {
+                                            withEnv([
                                 'EUREKA_HOSTNAME_DISCOVERY=discovery',
                             ]) {
-            steps {
                 script {
                     sh '''
                         docker run -d \
