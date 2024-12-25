@@ -36,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage('Run Config Server') {
+        /*stage('Run Config Server') {
             steps {
                 script {
                     sh '''
@@ -53,7 +53,7 @@ pipeline {
                     '''
                 }
             }
-        }
+        }*/
         stage('Build Discovery Service Image') {
             steps {
                 dir('discovery-service') {
@@ -63,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage('Run Discovery Service') {
+        /*stage('Run Discovery Service') {
             steps {
                                             withEnv([
                                 'EUREKA_HOSTNAME_DISCOVERY=discovery',
@@ -86,7 +86,7 @@ pipeline {
                     '''
                 }
             }
-        }
+        }*/
         }
         stage('Test Gateway Image') {
             steps {
