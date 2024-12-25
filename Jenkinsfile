@@ -22,7 +22,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
+                git branch: 'master',
                     url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
                     credentialsId: 'github'
             }
