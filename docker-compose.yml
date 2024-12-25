@@ -40,6 +40,21 @@ services:
       config-server:
         condition: service_healthy
 
+  jenkins:
+    image: salahgo/jenkins:dind
+    container_name: jenkins
+    ports:
+      - 8010:8080
+      - 50000:50000
+    privileged: true
+    volumes:
+      - /var/lib/docker/volumes/jenkins_home/_data:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    networks:
+      - microservices
+
+
   gateway:
     build:
       context: ./gateway
