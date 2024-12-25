@@ -108,5 +108,25 @@ pipeline {
                 }
             }
         }
+                stage('Test Library Service Image') {
+                    steps {
+                        dir('library-service') {
+                            withEnv([
+                                'EUREKA_HOSTNAME_LIBRARY=library',
+                                'EUREKA_DEFAULT_ZONE=http://discovery-service:8761/eureka'
+                            ]) {
+                                script {
+                                    sh '''
+                                        mvn clean test verify sonar:sonar \
+                                            -Dsonar.projectKey=library \
+                                            -Dsonar.projectName='library' \
+                                            -Dsonar.host.url=http://sonarqube:9000 \
+                                            -Dsonar.token=sqp_4e0bf7b4fd2550c0e7611f48ba31c9f2285b7c70
+                                    '''
+                                }
+                            }
+                        }
+                    }
+                }
     }
 }
