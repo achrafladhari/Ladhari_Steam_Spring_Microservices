@@ -28,7 +28,6 @@ pipeline {
             }
         }
         stage('Build Config Server Image') {
-           // when { changeset "config-server/*"}
             steps {
                 dir('config-server') {
                     script {
@@ -37,8 +36,25 @@ pipeline {
                 }
             }
         }
+        stage('Run Config Server') {
+            steps {
+                script {
+                    sh '''
+                        docker run -d \
+                            --name config-server \
+                            -p 8888:8888 \
+                            -v config-server:/app \
+                            --health-cmd="nc -z localhost 8888 || exit 1" \
+                            --health-interval=30s \
+                            --health-retries=3 \
+                            --health-start-period=10s \
+                            --health-timeout=10s \
+                            ${IMAGE_NAME_CONFIG_SERVER}
+                    '''
+                }
+            }
+        }
         stage('Build Discovery Service Image') {
-           // when { changeset "discovery-service/*"}
             steps {
                 dir('discovery-service') {
                     script {
@@ -47,108 +63,46 @@ pipeline {
                 }
             }
         }
+        stage('Run Discovery Service') {
+            steps {
+                script {
+                    sh '''
+                        docker run -d \
+                            --name discovery-service \
+                            -p 8761:8761 \
+                            -v discovery-service:/app \
+                            -e EUREKA_HOSTNAME_DISCOVERY=discovery-service \
+                            -e CONFIG_SERVER_URL=optional:configserver:http://config-server:8888 \
+                            --health-cmd="nc -z localhost 8761 || exit 1" \
+                            --health-interval=30s \
+                            --health-retries=3 \
+                            --health-start-period=10s \
+                            --health-timeout=10s \
+                            --link config-server \
+                            ${IMAGE_NAME_DISCOVERY_SERVICE}
+                    '''
+                }
+            }
+        }
         stage('Test Gateway Image') {
-            //when { changeset "gateway/*"}
             steps {
                 dir('gateway') {
-                    script{
-                        sh '''mvn clean verify sonar:sonar \
-                                -Dsonar.projectKey=gateway \
-                                -Dsonar.projectName='gateway' \
-                                -Dsonar.host.url=http://sonarqube:9000 \
-                                -Dsonar.token=sqp_5f02e6acce83a46036b3a1a051bc486ec5087ba7 \
+                    withEnv([
+                        'EUREKA_HOSTNAME_GATEWAY=gateway',
+                        'EUREKA_DEFAULT_ZONE=http://discovery-service:8761/eureka'
+                    ]) {
+                        script {
+                            sh '''
+                                mvn clean verify sonar:sonar \
+                                    -Dsonar.projectKey=gateway \
+                                    -Dsonar.projectName='gateway' \
+                                    -Dsonar.host.url=http://sonarqube:9000 \
+                                    -Dsonar.token=sqp_5f02e6acce83a46036b3a1a051bc486ec5087ba7
                             '''
+                        }
                     }
                 }
             }
         }
-       /* stage('Build Server Image') {
-            when { changeset "server/*"}
-            steps {
-                dir('server') {
-                    script {
-                        dockerImageServer = docker.build("${IMAGE_NAME_SERVER}")
-                    }
-                }
-            }
-        }
-
-        stage('Build Client Image') {
-            when { changeset "client/*"}
-            steps {
-                dir('client') {
-                    script {
-                        dockerImageClient = docker.build("${IMAGE_NAME_CLIENT}")
-                    }
-                }
-            }
-        }
-
-        stage('Scan Server Image') {
-            when { changeset "server/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_SERVER}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Client Image') {
-            when { changeset "client/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_CLIENT}
-                    """
-                }
-            }
-        }
-
-        stage('Push Server Image to Docker Hub') {
-            when { changeset "server/*"}
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        dockerImageServer.push()
-                    }
-                }
-            }
-        }
-        stage('Push Client Image to Docker Hub') {
-            when { changeset "client/*"}
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        dockerImageClient.push()
-                    }
-                }
-            }
-        }*/
-
     }
-    /*post {
-        always {
-            script {
-                echo 'Cleanup phase!'
-                if (sh(script: "docker images -q aquasec/trivy", returnStdout: true).trim()) {
-                    sh 'docker rmi aquasec/trivy'
-                }
-                if (sh(script: "docker images -q ${IMAGE_NAME_SERVER}", returnStdout: true).trim()) {
-                    sh "docker rmi ${IMAGE_NAME_SERVER}"
-                }
-                if (sh(script: "docker images -q ${IMAGE_NAME_CLIENT}", returnStdout: true).trim()) {
-                    sh "docker rmi ${IMAGE_NAME_CLIENT}"
-                }
-                echo 'Cleanup Succefully done!'
-            }
-        }
-    }*/
 }
