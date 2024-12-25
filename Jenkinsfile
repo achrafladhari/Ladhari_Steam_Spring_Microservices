@@ -97,7 +97,7 @@ pipeline {
                     ]) {
                         script {
                             sh '''
-                                mvn clean test sonar:sonar \
+                                mvn clean test verify sonar:sonar \
                                     -Dsonar.projectKey=gateway \
                                     -Dsonar.projectName='gateway' \
                                     -Dsonar.host.url=http://sonarqube:9000 \
