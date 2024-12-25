@@ -121,13 +121,8 @@
 					<execution>
 						<goals>
 							<goal>prepare-agent</goal> <!-- Initializes the agent -->
-						</goals>
-					</execution>
-					<execution>
-						<goals>
 							<goal>report</goal> <!-- Generates the report -->
 						</goals>
-						<phase>verify</phase>
 					</execution>
 				</executions>
 			</plugin>
