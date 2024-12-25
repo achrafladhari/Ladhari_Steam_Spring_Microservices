@@ -86,8 +86,8 @@ pipeline {
                     '''
                 }
             }
-        }*/
         }
+        }*/
         stage('Test Gateway Image') {
             steps {
                 dir('gateway') {
