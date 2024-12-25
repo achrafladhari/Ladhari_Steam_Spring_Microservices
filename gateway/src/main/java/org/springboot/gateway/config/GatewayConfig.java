@@ -17,22 +17,22 @@ public class GatewayConfig {
     public GatewayConfig(JwtAuthenticationFilter filter) {
         this.filter = filter;
     }
-    private final String ROLE_ADMIN="ADMIN";
-    private final String ROLE_USER="USER";
+    private final static String ROLE_ADMIN="ADMIN";
+    private final static String ROLE_USER="USER";
     private final String USER_SERVICE="user-service";
-    private final String URI_USER_SERVICE="lb://user-service";
+    private final static String URI_USER_SERVICE="lb://user-service";
     
     private final String PAYMENT_SERVICE="payment-service";
-    private final String URI_PAYMENT_SERVICE="lb://payment-service";
+    private final static String URI_PAYMENT_SERVICE="lb://payment-service";
 
     private final String ORDER_SERVICE="order-service";
-    private final String URI_ORDER_SERVICE="lb://order-service";
+    private final static String URI_ORDER_SERVICE="lb://order-service";
 
     private final String GAMES_SERVICE="games-service";
-    private final String URI_GAMES_SERVICE="lb://games-service";
+    private final static String URI_GAMES_SERVICE="lb://games-service";
 
     private final String LIBRARY_SERVICE="library-service";
-    private final String URI_LIBRARY_SERVICE="lb://library-service";
+    private final static String URI_LIBRARY_SERVICE="lb://library-service";
 
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
