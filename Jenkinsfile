@@ -24,7 +24,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
-                    credentialsId: 'github_ssh'
+                    credentialsId: 'github'
             }
         }
         stage('Build Config Server Image') {
