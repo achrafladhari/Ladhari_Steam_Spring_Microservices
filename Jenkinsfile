@@ -64,6 +64,9 @@ pipeline {
             }
         }
         stage('Run Discovery Service') {
+                            withEnv([
+                                'EUREKA_HOSTNAME_DISCOVERY=discovery',
+                            ]) {
             steps {
                 script {
                     sh '''
@@ -83,6 +86,7 @@ pipeline {
                     '''
                 }
             }
+        }
         }
         stage('Test Gateway Image') {
             steps {
