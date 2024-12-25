@@ -55,7 +55,7 @@ pipeline {
                         sh '''mvn clean verify sonar:sonar \
                                 -Dsonar.projectKey=gateway \
                                 -Dsonar.projectName='gateway' \
-                                -Dsonar.host.url=http://localhost:9000 \
+                                -Dsonar.host.url=http://sonarqube:9000 \
                                 -Dsonar.token=sqp_5f02e6acce83a46036b3a1a051bc486ec5087ba7 \
                             '''
                     }
