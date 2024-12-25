@@ -17,20 +17,22 @@ public class GatewayConfig {
     public GatewayConfig(JwtAuthenticationFilter filter) {
         this.filter = filter;
     }
-    private final static String USER_SERVICE="user-service";
-    private final static String URI_USER_SERVICE="lb://user-service";
+    private final String ROLE_ADMIN="ADMIN";
+    private final String ROLE_USER="USER";
+    private final String USER_SERVICE="user-service";
+    private final String URI_USER_SERVICE="lb://user-service";
     
-    private final static String PAYMENT_SERVICE="payment-service";
-    private final static String URI_PAYMENT_SERVICE="lb://payment-service";
+    private final String PAYMENT_SERVICE="payment-service";
+    private final String URI_PAYMENT_SERVICE="lb://payment-service";
 
-    private final static String ORDER_SERVICE="order-service";
-    private final static String URI_ORDER_SERVICE="lb://order-service";
+    private final String ORDER_SERVICE="order-service";
+    private final String URI_ORDER_SERVICE="lb://order-service";
 
-    private final static String GAMES_SERVICE="games-service";
-    private final static String URI_GAMES_SERVICE="lb://games-service";
+    private final String GAMES_SERVICE="games-service";
+    private final String URI_GAMES_SERVICE="lb://games-service";
 
-    private final static String LIBRARY_SERVICE="library-service";
-    private final static String URI_LIBRARY_SERVICE="lb://library-service";
+    private final String LIBRARY_SERVICE="library-service";
+    private final String URI_LIBRARY_SERVICE="lb://library-service";
 
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
@@ -38,7 +40,7 @@ public class GatewayConfig {
                 // USER SERVICE ROUTES
                 .route(USER_SERVICE, r -> r.path("/api/v1/users/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("USER", "ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN, ROLE_USER)))
                                 .filter(filter))
                         .uri(URI_USER_SERVICE))
 
@@ -47,7 +49,7 @@ public class GatewayConfig {
 
                 .route(USER_SERVICE, r -> r.path("/api/v1/user/admin/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN)))
                                 .filter(filter))
                         .uri(URI_USER_SERVICE))
 
@@ -60,7 +62,7 @@ public class GatewayConfig {
                 //GAMES SERVICE ROUTES
                 .route(GAMES_SERVICE, r -> r.path("/api/v1/games/purchase")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("USER", "ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN, ROLE_USER)))
                                 .filter(filter))
                         .uri(URI_GAMES_SERVICE))
 
@@ -78,13 +80,13 @@ public class GatewayConfig {
 
                 .route(GAMES_SERVICE, r -> r.path("/api/v1/game/admin/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN)))
                                 .filter(filter))
                         .uri(URI_GAMES_SERVICE))
 
                 .route(GAMES_SERVICE, r -> r.path("/api/v1/category/admin/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN)))
                                 .filter(filter))
                         .uri(URI_GAMES_SERVICE))
 
@@ -97,21 +99,21 @@ public class GatewayConfig {
                 //ORDER SERVICE ROUTES
                 .route(ORDER_SERVICE, r -> r.path("/api/v1/orders/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("USER", "ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN, ROLE_USER)))
                                 .filter(filter))
                         .uri(URI_ORDER_SERVICE))
 
 
                 .route(ORDER_SERVICE, r -> r.path("/api/v1/order/admin/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN)))
                                 .filter(filter))
                         .uri(URI_ORDER_SERVICE))
 
 
                 .route(ORDER_SERVICE, r -> r.path("/api/v1/order-lines/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("USER","ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_USER,ROLE_ADMIN)))
                                 .filter(filter))
                         .uri(URI_ORDER_SERVICE))
 
@@ -124,7 +126,7 @@ public class GatewayConfig {
                 //PAYMENTS SERVICE ROUTES
                 .route(PAYMENT_SERVICE, r -> r.path("/api/v1/payments/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("USER", "ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN, ROLE_USER)))
                                 .filter(filter))
                         .uri(URI_PAYMENT_SERVICE))
 
@@ -138,7 +140,7 @@ public class GatewayConfig {
                 //LIBRARY SERVICE ROUTES
                 .route(LIBRARY_SERVICE, r -> r.path("/api/v1/library/**")
                         .filters(f -> f
-                                .filter(new RoleAssignmentFilter(List.of("USER", "ADMIN")))
+                                .filter(new RoleAssignmentFilter(List.of(ROLE_ADMIN, ROLE_USER)))
                                 .filter(filter))
                         .uri(URI_LIBRARY_SERVICE))
 
