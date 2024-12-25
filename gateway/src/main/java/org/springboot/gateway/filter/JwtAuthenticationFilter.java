@@ -1,8 +1,6 @@
 package org.springboot.gateway.filter;
 
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springboot.gateway.util.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -20,7 +18,6 @@ import java.util.function.Predicate;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter implements GatewayFilter {
-    Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     private final JwtUtil jwtUtil;
     private static final List<String> OPEN_ENDPOINTS = Arrays.asList(
             "/api/v1/auth/register",
@@ -43,9 +40,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
-
-        //List.of("/api/v1/auth/login", "/api/v1/auth/register", "/eureka", "/api/v1/games","/api/v1/games/{game-id}",WHITE_LIST_URL);
-
         Predicate<ServerHttpRequest> isApiSecured = r -> OPEN_ENDPOINTS.stream()
                 .noneMatch(uri -> r.getURI().getPath().contains(uri));
 
@@ -61,8 +55,6 @@ public class JwtAuthenticationFilter implements GatewayFilter {
                 jwtUtil.validateToken(token);
                 List<String> roles = jwtUtil.getRolesFromToken(token);
                 List<String> requiredRoles = exchange.getAttribute("requiredRoles");
-               // logger.info(requiredRoles.toString());
-                logger.info(roles.toString());
                 if (requiredRoles == null || !userHasRequiredRoles(roles, requiredRoles)) {
                     return onAccessDenied(exchange);
                 }

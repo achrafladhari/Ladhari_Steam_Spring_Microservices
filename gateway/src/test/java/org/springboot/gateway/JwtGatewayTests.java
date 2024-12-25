@@ -7,6 +7,7 @@ import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springboot.gateway.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.security.Key;
@@ -16,7 +17,6 @@ import java.util.List;
 import static java.util.List.of;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.springboot.gateway.util.JwtUtil.SECRET_KEY;
 
 @SpringBootTest
 public class JwtGatewayTests {
@@ -24,6 +24,9 @@ public class JwtGatewayTests {
     private JwtUtil jwtUtil;
     private String validToken;
     private String invalidToken;
+
+    @Value("${variables.SECRET_KEY}")
+    private static String SECRET_KEY;
 
     @BeforeEach
     void setUp() {

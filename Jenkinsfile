@@ -18,7 +18,6 @@ pipeline {
         IMAGE_NAME_LIBRARY_SERVICE = 'chrayef/library-service'
         IMAGE_NAME_PAYMENT_SERVICE = 'chrayef/payment-service'
     }
-
     stages {
         stage('Checkout') {
             steps {
@@ -36,24 +35,6 @@ pipeline {
                 }
             }
         }
-        /*stage('Run Config Server') {
-            steps {
-                script {
-                    sh '''
-                        docker run -d \
-                            --name config-server \
-                            -p 8888:8888 \
-                            -v config-server:/app \
-                            --health-cmd="nc -z localhost 8888 || exit 1" \
-                            --health-interval=30s \
-                            --health-retries=3 \
-                            --health-start-period=10s \
-                            --health-timeout=10s \
-                            ${IMAGE_NAME_CONFIG_SERVER}
-                    '''
-                }
-            }
-        }*/
         stage('Build Discovery Service Image') {
             steps {
                 dir('discovery-service') {
@@ -63,31 +44,6 @@ pipeline {
                 }
             }
         }
-        /*stage('Run Discovery Service') {
-            steps {
-                                            withEnv([
-                                'EUREKA_HOSTNAME_DISCOVERY=discovery',
-                            ]) {
-                script {
-                    sh '''
-                        docker run -d \
-                            --name discovery-service \
-                            -p 8761:8761 \
-                            -v discovery-service:/app \
-                            -e EUREKA_HOSTNAME_DISCOVERY=discovery-service \
-                            -e CONFIG_SERVER_URL=optional:configserver:http://config-server:8888 \
-                            --health-cmd="nc -z localhost 8761 || exit 1" \
-                            --health-interval=30s \
-                            --health-retries=3 \
-                            --health-start-period=10s \
-                            --health-timeout=10s \
-                            --link config-server \
-                            ${IMAGE_NAME_DISCOVERY_SERVICE}
-                    '''
-                }
-            }
-        }
-        }*/
         stage('Test Gateway Image') {
             steps {
                 dir('gateway') {
@@ -108,9 +64,9 @@ pipeline {
                 }
             }
         }
-                stage('Test Library Service Image') {
-                    steps {
-                        dir('library-service') {
+        stage('Test Library Service Image') {
+            steps {
+                dir('library-service') {
                             withEnv([
                                 'EUREKA_HOSTNAME_LIBRARY=library',
                                 'EUREKA_DEFAULT_ZONE=http://discovery-service:8761/eureka'
