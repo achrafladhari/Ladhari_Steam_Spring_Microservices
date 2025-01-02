@@ -17,7 +17,10 @@ pipeline {
         IMAGE_NAME_ORDER_SERVICE = 'chrayef/order-service'
         IMAGE_NAME_LIBRARY_SERVICE = 'chrayef/library-service'
         IMAGE_NAME_PAYMENT_SERVICE = 'chrayef/payment-service'
+        MAGE_NAME_FRONTEND = 'chrayef/client'
+        BUILD_ID = "${env.BUILD_ID}"
     }
+
     stages {
         stage('Checkout') {
             steps {
@@ -30,7 +33,7 @@ pipeline {
             steps {
                 dir('config-server') {
                     script {
-                        dockerImageConfigServer = docker.build("${IMAGE_NAME_CONFIG_SERVER}")
+                        dockerImageConfigServer = docker.build("${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}")
                     }
                 }
             }
@@ -39,12 +42,75 @@ pipeline {
             steps {
                 dir('discovery-service') {
                     script {
-                        dockerImageDiscoveryService = docker.build("${IMAGE_NAME_DISCOVERY_SERVICE}")
+                        dockerImageDiscoveryService = docker.build("${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}")
                     }
                 }
             }
         }
-        stage('Test Gateway Image') {
+        stage('Build Gateway Image') {
+            steps {
+                dir('gateway') {
+                    script {
+                        dockerImageGateway = docker.build("${IMAGE_NAME_GATEWAY}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build User Image') {
+            steps {
+                dir('user-service') {
+                    script {
+                        dockerImageUserService = docker.build("${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build Games Image') {
+            steps {
+                dir('games-service') {
+                    script {
+                        dockerImageGamesService = docker.build("${IMAGE_NAME_GAMES_SERVICE}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build Order Image') {
+            steps {
+                dir('order-service') {
+                    script {
+                        dockerImageOrderService = docker.build("${IMAGE_NAME_ORDER_SERVICE}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build Library Image') {
+            steps {
+                dir('library-service') {
+                    script {
+                        dockerImageLibraryService = docker.build("${IMAGE_NAME_LIBRARY_SERVICE}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build Payment Image') {
+            steps {
+                dir('payment-service') {
+                    script {
+                        dockerImagePaymentService = docker.build("${IMAGE_NAME_PAYMENT_SERVICE}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        stage('Build FrontEnd Image') {
+            steps {
+                dir('UI_Spring') {
+                    script {
+                        dockerImageFront = docker.build("${MAGE_NAME_FRONTEND}:${BUILD_ID}")
+                    }
+                }
+            }
+        }
+        /*stage('Test Gateway Image') {
             steps {
                 dir('gateway') {
                     withEnv([
@@ -63,8 +129,8 @@ pipeline {
                     }
                 }
             }
-        }
-        stage('Test Library Service Image') {
+        }*/
+        /*stage('Test Library Service Image') {
             steps {
                 dir('library-service') {
                             withEnv([
@@ -83,6 +149,125 @@ pipeline {
                             }
                         }
                     }
+                }*/
+        stage('Push Config Server Image to Docker Hub') {
+            //when { changeset "server/*"}
+                steps {
+                    script {
+                            docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                    dockerImageConfigServer.push()
+                                }
+                            }
+                        }
+            }
+        stage('Push Discovery Service Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageDiscoveryService.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push Gateway Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageGateway.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push Library Service Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageLibraryService.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push User Service Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageUserService.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push Games Service Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageGamesService.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push Order Service Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageOrderService.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push Payment Service Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImagePaymentService.push()
+                                }
+                        }
+                    }
+            }
+        stage('Push FRONTEND Image to Docker Hub') {
+            //when { changeset "client/*"}
+                steps {
+                    script {
+                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
+                                        dockerImageFront.push()
+                                }
+                        }
+                    }
+            }
+    }
+    //CLEAN UP !!
+    post {
+        always {
+            script {
+                echo 'Cleanup phase!'
+
+                def imagesToCleanup = [
+                    'aquasec/trivy',
+                    "${IMAGE_NAME_CONFIG_SERVER}",
+                    "${IMAGE_NAME_DISCOVERY_SERVICE}",
+                    "${IMAGE_NAME_GATEWAY}",
+                    "${IMAGE_NAME_USER_SERVICE}",
+                    "${IMAGE_NAME_GAMES_SERVICE}",
+                    "${IMAGE_NAME_ORDER_SERVICE}",
+                    "${IMAGE_NAME_LIBRARY_SERVICE}",
+                    "${IMAGE_NAME_PAYMENT_SERVICE}",
+                    "${MAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
+                ]
+
+                imagesToCleanup.each { imageName ->
+                    if (sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()) {
+                        sh "docker rmi ${imageName}:*"
+                    }
                 }
+
+                echo 'Cleanup Successfully done!'
+            }
+        }
     }
 }

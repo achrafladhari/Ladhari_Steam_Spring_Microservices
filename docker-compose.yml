@@ -123,10 +123,10 @@ services:
     volumes:
       - order-service:/app
     environment:
-      USER_URL: http://user-service:8222/api/v1/users
-      LIBRARY_URL: http://library-service:8222/api/v1/library
-      GAMES_URL: http://games-service:8222/api/v1/games
-      PAYMENT_URL: http://payment-service:8222/api/v1/payments
+      USER_URL: http://gateway:8222/api/v1/users
+      LIBRARY_URL: http://gateway:8222/api/v1/library
+      GAMES_URL: http://gateway:8222/api/v1/games
+      PAYMENT_URL: http://gateway:8222/api/v1/payments
       DB_URL: jdbc:postgresql://ms_pg_sql:5432/steam
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
@@ -166,7 +166,7 @@ services:
     volumes:
       - user-service:/app
     environment:
-      LIBRARY_URL: http://library-service:8222/api/v1/library
+      LIBRARY_URL: http://gateway:8222/api/v1/library
       EUREKA_HOSTNAME_USER: user-service
       MONGO_HOST: mongo_db
       EUREKA_DEFAULT_ZONE: http://discovery-service:8761/eureka
