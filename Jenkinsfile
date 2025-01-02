@@ -259,13 +259,14 @@ pipeline {
                     "${IMAGE_NAME_PAYMENT_SERVICE}",
                     "${MAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
                 ]
-
                 imagesToCleanup.each { imageName ->
-                    if (sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()) {
-                        sh "docker rmi ${imageName}:*"
+                    def imageIds = sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()
+                    if (imageIds) {
+                        imageIds.split('\n').each { imageId ->
+                            sh "docker rmi ${imageId}"
+                        }
                     }
                 }
-
                 echo 'Cleanup Successfully done!'
             }
         }

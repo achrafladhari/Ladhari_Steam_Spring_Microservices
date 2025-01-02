@@ -2,7 +2,7 @@
 FROM node:18.19.1-alpine as BUILD
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm install
+RUN npm install --force
 COPY . .
 #Prod
 RUN npm run build --prod
