@@ -30,6 +30,7 @@ pipeline {
             }
         }
         stage('Build Config Server Image') {
+            when { changeset "config-server/*"}
             steps {
                 dir('config-server') {
                     script {
@@ -39,6 +40,7 @@ pipeline {
             }
         }
         stage('Build Discovery Service Image') {
+            when { changeset "discovery-service/*"}
             steps {
                 dir('discovery-service') {
                     script {
@@ -48,6 +50,7 @@ pipeline {
             }
         }
         stage('Build Gateway Image') {
+            when { changeset "gateway/*"}
             steps {
                 dir('gateway') {
                     script {
@@ -57,6 +60,7 @@ pipeline {
             }
         }
         stage('Build User Image') {
+            when { changeset "user-service/*"}
             steps {
                 dir('user-service') {
                     script {
@@ -66,6 +70,7 @@ pipeline {
             }
         }
         stage('Build Games Image') {
+            when { changeset "games-service/*"}
             steps {
                 dir('games-service') {
                     script {
@@ -75,6 +80,7 @@ pipeline {
             }
         }
         stage('Build Order Image') {
+            when { changeset "order-service/*"}
             steps {
                 dir('order-service') {
                     script {
@@ -84,6 +90,7 @@ pipeline {
             }
         }
         stage('Build Library Image') {
+            when { changeset "library-service/*"}
             steps {
                 dir('library-service') {
                     script {
@@ -93,6 +100,7 @@ pipeline {
             }
         }
         stage('Build Payment Image') {
+            when { changeset "payment-service/*"}
             steps {
                 dir('payment-service') {
                     script {
@@ -102,6 +110,7 @@ pipeline {
             }
         }
         stage('Build FrontEnd Image') {
+            when { changeset "UI_Spring/*"}
             steps {
                 dir('UI_Spring') {
                     script {
@@ -151,7 +160,7 @@ pipeline {
                     }
                 }*/
         stage('Push Config Server Image to Docker Hub') {
-            //when { changeset "server/*"}
+            when { changeset "config-server/*"}
                 steps {
                     script {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -161,7 +170,7 @@ pipeline {
                         }
             }
         stage('Push Discovery Service Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "discovery-service/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -171,7 +180,7 @@ pipeline {
                     }
             }
         stage('Push Gateway Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "gateway/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -181,7 +190,7 @@ pipeline {
                     }
             }
         stage('Push Library Service Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "library-service/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -191,7 +200,7 @@ pipeline {
                     }
             }
         stage('Push User Service Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "user-service/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -201,7 +210,7 @@ pipeline {
                     }
             }
         stage('Push Games Service Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "games-service/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -211,7 +220,7 @@ pipeline {
                     }
             }
         stage('Push Order Service Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "order-service/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -221,7 +230,7 @@ pipeline {
                     }
             }
         stage('Push Payment Service Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "payment-service/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -231,7 +240,7 @@ pipeline {
                     }
             }
         stage('Push FRONTEND Image to Docker Hub') {
-            //when { changeset "client/*"}
+            when { changeset "UI_Spring/*"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
