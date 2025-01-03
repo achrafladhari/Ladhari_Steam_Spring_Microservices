@@ -30,7 +30,7 @@ pipeline {
             }
         }
         stage('Build Config Server Image') {
-            //when { changeset "config-server/*"}
+            when { changeset "config-server/*"}
             steps {
                 dir('config-server') {
                     script {
@@ -40,7 +40,7 @@ pipeline {
             }
         }
         stage('Build Discovery Service Image') {
-            //when { changeset "discovery-service/*"}
+            when { changeset "discovery-service/*"}
             steps {
                 dir('discovery-service') {
                     script {
@@ -50,7 +50,7 @@ pipeline {
             }
         }
         stage('Build Gateway Image') {
-            //when { changeset "gateway/*"}
+            when { changeset "gateway/*"}
             steps {
                 dir('gateway') {
                     script {
@@ -60,7 +60,7 @@ pipeline {
             }
         }
         stage('Build User Image') {
-            //when { changeset "user-service/*"}
+            when { changeset "user-service/*"}
             steps {
                 dir('user-service') {
                     script {
@@ -70,7 +70,7 @@ pipeline {
             }
         }
         stage('Build Games Image') {
-            //when { changeset "games-service/*"}
+            when { changeset "games-service/*"}
             steps {
                 dir('games-service') {
                     script {
@@ -80,7 +80,7 @@ pipeline {
             }
         }
         stage('Build Order Image') {
-            //when { changeset "order-service/*"}
+            when { changeset "order-service/*"}
             steps {
                 dir('order-service') {
                     script {
@@ -90,7 +90,7 @@ pipeline {
             }
         }
         stage('Build Library Image') {
-            //when { changeset "library-service/*"}
+            when { changeset "library-service/*"}
             steps {
                 dir('library-service') {
                     script {
@@ -100,7 +100,7 @@ pipeline {
             }
         }
         stage('Build Payment Image') {
-            //when { changeset "payment-service/*"}
+            when { changeset "payment-service/*"}
             steps {
                 dir('payment-service') {
                     script {
@@ -110,7 +110,7 @@ pipeline {
             }
         }
         stage('Build FrontEnd Image') {
-            //when { changeset "UI_Spring/*"}
+            when { changeset "UI_Spring/*"}
             steps {
                 dir('UI_Spring') {
                     script {
@@ -122,7 +122,7 @@ pipeline {
 
         //scan trivy
         stage('Scan Config Server Image') {
-            //when { changeset "config-server/*"}
+            when { changeset "config-server/*"}
             steps {
                 script {
                     sh """
@@ -136,7 +136,7 @@ pipeline {
         }
 
         stage('Scan Discovery Service Image') {
-            //when { changeset "discovery-service/*"}
+            when { changeset "discovery-service/*"}
             steps {
                 script {
                     sh """
@@ -150,7 +150,7 @@ pipeline {
         }
 
         stage('Scan Gateway Image') {
-            //when { changeset "gateway/*"}
+            when { changeset "gateway/*"}
             steps {
                 script {
                     sh """
@@ -164,7 +164,7 @@ pipeline {
         }
 
         stage('Scan Games Service Image') {
-            //when { changeset "games-service/*"}
+            when { changeset "games-service/*"}
             steps {
                 script {
                     sh """
@@ -178,7 +178,7 @@ pipeline {
         }
 
         stage('Scan User Service Image') {
-            //when { changeset "user-service/*"}
+            when { changeset "user-service/*"}
             steps {
                 script {
                     sh """
@@ -192,7 +192,7 @@ pipeline {
         }
 
         stage('Scan Library Service Image') {
-            //when { changeset "library-service/*"}
+            when { changeset "library-service/*"}
             steps {
                 script {
                     sh """
@@ -206,7 +206,7 @@ pipeline {
         }
 
         stage('Scan Order Service Image') {
-            //when { changeset "order-service/*"}
+            when { changeset "order-service/*"}
             steps {
                 script {
                     sh """
@@ -220,7 +220,7 @@ pipeline {
         }
 
         stage('Scan Client Service Image') {
-            //when { changeset "UI_Spring/*"}
+            when { changeset "UI_Spring/*"}
             steps {
                 script {
                     sh """
