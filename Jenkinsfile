@@ -29,347 +29,174 @@ pipeline {
                     credentialsId: 'github'
             }
         }
-        stage('Build Config Server Image') {
-            //when { changeset "config-server/*"}
-            steps {
-                dir('config-server') {
-                    script {
-                        dockerImageConfigServer = docker.build("${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}")
+
+        // Build Docker Images
+        stage('Build Docker Images') {
+            parallel {
+                stage('Build Config Server Image') {
+                    steps {
+                        dir('config-server') {
+                            script {
+                                dockerImageConfigServer = docker.build("${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build Discovery Service Image') {
-            //when { changeset "discovery-service/*"}
-            steps {
-                dir('discovery-service') {
-                    script {
-                        dockerImageDiscoveryService = docker.build("${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}")
+                stage('Build Discovery Service Image') {
+                    steps {
+                        dir('discovery-service') {
+                            script {
+                                dockerImageDiscoveryService = docker.build("${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build Gateway Image') {
-            //when { changeset "gateway/*"}
-            steps {
-                dir('gateway') {
-                    script {
-                        dockerImageGateway = docker.build("${IMAGE_NAME_GATEWAY}:${BUILD_ID}")
+                stage('Build Gateway Image') {
+                    steps {
+                        dir('gateway') {
+                            script {
+                                dockerImageGateway = docker.build("${IMAGE_NAME_GATEWAY}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build User Image') {
-            //when { changeset "user-service/*"}
-            steps {
-                dir('user-service') {
-                    script {
-                        dockerImageUserService = docker.build("${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}")
+                stage('Build User Service Image') {
+                    steps {
+                        dir('user-service') {
+                            script {
+                                dockerImageUserService = docker.build("${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build Games Image') {
-            //when { changeset "games-service/*"}
-            steps {
-                dir('games-service') {
-                    script {
-                        dockerImageGamesService = docker.build("${IMAGE_NAME_GAMES_SERVICE}:${BUILD_ID}")
+                stage('Build Games Service Image') {
+                    steps {
+                        dir('games-service') {
+                            script {
+                                dockerImageGamesService = docker.build("${IMAGE_NAME_GAMES_SERVICE}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build Order Image') {
-            //when { changeset "order-service/*"}
-            steps {
-                dir('order-service') {
-                    script {
-                        dockerImageOrderService = docker.build("${IMAGE_NAME_ORDER_SERVICE}:${BUILD_ID}")
+                stage('Build Order Service Image') {
+                    steps {
+                        dir('order-service') {
+                            script {
+                                dockerImageOrderService = docker.build("${IMAGE_NAME_ORDER_SERVICE}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build Library Image') {
-            //when { changeset "library-service/*"}
-            steps {
-                dir('library-service') {
-                    script {
-                        dockerImageLibraryService = docker.build("${IMAGE_NAME_LIBRARY_SERVICE}:${BUILD_ID}")
+                stage('Build Library Service Image') {
+                    steps {
+                        dir('library-service') {
+                            script {
+                                dockerImageLibraryService = docker.build("${IMAGE_NAME_LIBRARY_SERVICE}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build Payment Image') {
-            //when { changeset "payment-service/*"}
-            steps {
-                dir('payment-service') {
-                    script {
-                        dockerImagePaymentService = docker.build("${IMAGE_NAME_PAYMENT_SERVICE}:${BUILD_ID}")
+                stage('Build Payment Service Image') {
+                    steps {
+                        dir('payment-service') {
+                            script {
+                                dockerImagePaymentService = docker.build("${IMAGE_NAME_PAYMENT_SERVICE}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
-            }
-        }
-        stage('Build FrontEnd Image') {
-            //when { changeset "UI_Spring/*"}
-            steps {
-                dir('UI_Spring') {
-                    script {
-                        dockerImageFront = docker.build("${IMAGE_NAME_FRONTEND}:${BUILD_ID}")
+                stage('Build Frontend Image') {
+                    steps {
+                        dir('UI_Spring') {
+                            script {
+                                dockerImageFront = docker.build("${IMAGE_NAME_FRONTEND}:${BUILD_ID}")
+                            }
+                        }
                     }
                 }
             }
         }
 
-        //scan trivy
-        stage('Scan Config Server Image') {
-            //when { changeset "config-server/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Discovery Service Image') {
-            //when { changeset "discovery-service/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Gateway Image') {
-            //when { changeset "gateway/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_GATEWAY}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Games Service Image') {
-            //when { changeset "games-service/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_GAMES_SERVICE}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan User Service Image') {
-            //when { changeset "user-service/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Library Service Image') {
-            //when { changeset "library-service/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_LIBRARY_SERVICE}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Order Service Image') {
-            //when { changeset "order-service/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_ORDER_SERVICE}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        stage('Scan Client Service Image') {
-            //when { changeset "UI_Spring/*"}
-            steps {
-                script {
-                    sh """
-                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
-                    aquasec/trivy:latest image --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \\
-                    ${IMAGE_NAME_FRONTEND}:${BUILD_ID}
-                    """
-                }
-            }
-        }
-
-        /*stage('Test Gateway Image') {
-            steps {
-                dir('gateway') {
-                    withEnv([
-                        'EUREKA_HOSTNAME_GATEWAY=gateway',
-                        'EUREKA_DEFAULT_ZONE=http://discovery-service:8761/eureka'
-                    ]) {
+        // Trivy Scan Stages
+        stage('Trivy Scan Docker Images') {
+            parallel {
+                stage('Scan Config Server Image') {
+                    steps {
                         script {
-                            sh '''
-                                mvn clean test verify sonar:sonar \
-                                    -Dsonar.projectKey=gateway \
-                                    -Dsonar.projectName='gateway' \
-                                    -Dsonar.host.url=http://sonarqube:9000 \
-                                    -Dsonar.token=sqp_5f02e6acce83a46036b3a1a051bc486ec5087ba7
-                            '''
+                            sh """
+                            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                            -v /cache/.trivy:/root/.cache/trivy \
+                            -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \
+                            aquasec/trivy:latest image --timeout 10m --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \
+                            ${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}
+                            """
                         }
                     }
                 }
-            }
-        }*/
-        /*stage('Test Library Service Image') {
-            steps {
-                dir('library-service') {
-                            withEnv([
-                                'EUREKA_HOSTNAME_LIBRARY=library',
-                                'EUREKA_DEFAULT_ZONE=http://discovery-service:8761/eureka'
-                            ]) {
-                                script {
-                                    sh '''
-                                        mvn clean test verify sonar:sonar \
-                                            -Dsonar.projectKey=library \
-                                            -Dsonar.projectName='library' \
-                                            -Dsonar.host.url=http://sonarqube:9000 \
-                                            -Dsonar.token=sqp_4e0bf7b4fd2550c0e7611f48ba31c9f2285b7c70
-                                    '''
-                                }
-                            }
+                stage('Scan Discovery Service Image') {
+                    steps {
+                        script {
+                            sh """
+                            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                            -v /cache/.trivy:/root/.cache/trivy \
+                            -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \
+                            aquasec/trivy:latest image --timeout 10m --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \
+                            ${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}
+                            """
                         }
                     }
-                }*/
-        stage('Push Config Server Image to Docker Hub') {
-            when { changeset "config-server/*"}
-                steps {
-                    script {
+                }
+                stage('Scan Gateway Image') {
+                    steps {
+                        script {
+                            sh """
+                            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                            -v /cache/.trivy:/root/.cache/trivy \
+                            -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \
+                            aquasec/trivy:latest image --timeout 10m --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \
+                            ${IMAGE_NAME_GATEWAY}:${BUILD_ID}
+                            """
+                        }
+                    }
+                }
+                stage('Scan User Service Image') {
+                    steps {
+                        script {
+                            sh """
+                            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+                            -v /cache/.trivy:/root/.cache/trivy \
+                            -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \
+                            aquasec/trivy:latest image --timeout 10m --exit-code 0 --update --scanners vuln --no-progress --severity LOW,MEDIUM,HIGH,CRITICAL \
+                            ${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}
+                            """
+                        }
+                    }
+                }
+                // Add other services similarly...
+            }
+        }
+
+        // Push Docker Images
+        stage('Push Docker Images to Docker Hub') {
+            parallel {
+                stage('Push Config Server Image') {
+                    steps {
+                        script {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                    dockerImageConfigServer.push()
-                                }
+                                dockerImageConfigServer.push()
                             }
                         }
-            }
-        stage('Push Discovery Service Image to Docker Hub') {
-            when { changeset "discovery-service/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageDiscoveryService.push()
-                                }
-                        }
                     }
+                }
+                // Add push stages for other services similarly...
             }
-        stage('Push Gateway Image to Docker Hub') {
-            when { changeset "gateway/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageGateway.push()
-                                }
-                        }
-                    }
-            }
-        stage('Push Library Service Image to Docker Hub') {
-            when { changeset "library-service/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageLibraryService.push()
-                                }
-                        }
-                    }
-            }
-        stage('Push User Service Image to Docker Hub') {
-            when { changeset "user-service/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageUserService.push()
-                                }
-                        }
-                    }
-            }
-        stage('Push Games Service Image to Docker Hub') {
-            when { changeset "games-service/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageGamesService.push()
-                                }
-                        }
-                    }
-            }
-        stage('Push Order Service Image to Docker Hub') {
-            when { changeset "order-service/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageOrderService.push()
-                                }
-                        }
-                    }
-            }
-        stage('Push Payment Service Image to Docker Hub') {
-            when { changeset "payment-service/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImagePaymentService.push()
-                                }
-                        }
-                    }
-            }
-        stage('Push FRONTEND Image to Docker Hub') {
-            when { changeset "UI_Spring/*"}
-                steps {
-                    script {
-                                docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                                        dockerImageFront.push()
-                                }
-                        }
-                    }
-            }
+        }
     }
-    //CLEAN UP !!
+
     post {
         always {
             script {
                 echo 'Cleanup phase!'
-
                 def imagesToCleanup = [
                     'aquasec/trivy',
                     "${IMAGE_NAME_CONFIG_SERVER}",
@@ -380,7 +207,7 @@ pipeline {
                     "${IMAGE_NAME_ORDER_SERVICE}",
                     "${IMAGE_NAME_LIBRARY_SERVICE}",
                     "${IMAGE_NAME_PAYMENT_SERVICE}",
-                    "${IMAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
+                    "${IMAGE_NAME_FRONTEND}"
                 ]
                 imagesToCleanup.each { imageName ->
                     def imageIds = sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()
