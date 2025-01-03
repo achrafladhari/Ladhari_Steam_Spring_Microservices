@@ -119,6 +119,120 @@ pipeline {
                 }
             }
         }
+
+        //scan trivy
+        stage('Scan Config Server Image') {
+            when { changeset "config-server/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Discovery Service Image') {
+            when { changeset "discovery-service/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Gateway Image') {
+            when { changeset "gateway/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_GATEWAY}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Games Service Image') {
+            when { changeset "games-service/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_GAMES_SERVICE}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan User Service Image') {
+            when { changeset "user-service/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Library Service Image') {
+            when { changeset "library-service/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_LIBRARY_SERVICE}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Order Service Image') {
+            when { changeset "order-service/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_ORDER_SERVICE}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Client Service Image') {
+            when { changeset "UI_Spring/*"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_FRONTEND}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
         /*stage('Test Gateway Image') {
             steps {
                 dir('gateway') {
