@@ -17,7 +17,7 @@ pipeline {
         IMAGE_NAME_ORDER_SERVICE = 'chrayef/order-service'
         IMAGE_NAME_LIBRARY_SERVICE = 'chrayef/library-service'
         IMAGE_NAME_PAYMENT_SERVICE = 'chrayef/payment-service'
-        MAGE_NAME_FRONTEND = 'chrayef/client'
+        IMAGE_NAME_FRONTEND = 'chrayef/client'
         BUILD_ID = "${env.BUILD_ID}"
     }
 
@@ -105,7 +105,7 @@ pipeline {
             steps {
                 dir('UI_Spring') {
                     script {
-                        dockerImageFront = docker.build("${MAGE_NAME_FRONTEND}:${BUILD_ID}")
+                        dockerImageFront = docker.build("${IMAGE_NAME_FRONTEND}:${BUILD_ID}")
                     }
                 }
             }
@@ -257,13 +257,13 @@ pipeline {
                     "${IMAGE_NAME_ORDER_SERVICE}",
                     "${IMAGE_NAME_LIBRARY_SERVICE}",
                     "${IMAGE_NAME_PAYMENT_SERVICE}",
-                    "${MAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
+                    "${IMAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
                 ]
                 imagesToCleanup.each { imageName ->
                     def imageIds = sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()
                     if (imageIds) {
                         imageIds.split('\n').each { imageId ->
-                            sh "docker rmi ${imageId}"
+                            sh "docker rmi -f ${imageId}"
                         }
                     }
                 }
