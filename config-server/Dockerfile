@@ -5,6 +5,11 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
+# Run vulnerability scan on build image
+FROM builder AS vulnscan
+COPY --from=aquasec/trivy:latest /usr/local/bin/trivy /usr/local/bin/trivy
+RUN trivy rootfs --no-progress /
+
 #RUN
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
