@@ -23,7 +23,6 @@ spec:
             secretKeyRef:
               name: app-secrets
               key: mongoUsername
-
         - name: MONGO_INITDB_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:

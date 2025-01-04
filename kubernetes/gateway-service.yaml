@@ -7,6 +7,6 @@ spec:
     app: gateway
   ports:
   - protocol: TCP
-    port: 8222
+    port: 80
     targetPort: 8222
   type: LoadBalancer
