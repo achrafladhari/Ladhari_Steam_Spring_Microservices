@@ -13,26 +13,49 @@ import java.util.List;
 @Configuration
 public class GatewayConfig {
     private final JwtAuthenticationFilter filter;
+    
+        //VARIABLES
+        @Value("${roles.admin}")
+        private String ROLE_ADMIN;
+
+        @Value("${roles.user}")
+        private String ROLE_USER;
+
+        @Value("${services.user-service.name}")
+        private String USER_SERVICE;
+
+        @Value("${services.user-service.uri}")
+        private String URI_USER_SERVICE;
+
+        @Value("${services.payment-service.name}")
+        private String PAYMENT_SERVICE;
+
+        @Value("${services.payment-service.uri}")
+        private String URI_PAYMENT_SERVICE;
+
+        @Value("${services.order-service.name}")
+        private String ORDER_SERVICE;
+
+        @Value("${services.order-service.uri}")
+        private String URI_ORDER_SERVICE;
+
+        @Value("${services.games-service.name}")
+        private String GAMES_SERVICE;
+
+        @Value("${services.games-service.uri}")
+        private String URI_GAMES_SERVICE;
+
+        @Value("${services.library-service.name}")
+        private String LIBRARY_SERVICE;
+
+        @Value("${services.library-service.uri}")
+        private String URI_LIBRARY_SERVICE;
+
+
 
     public GatewayConfig(JwtAuthenticationFilter filter) {
         this.filter = filter;
     }
-    private final static String ROLE_ADMIN="ADMIN";
-    private final static String ROLE_USER="USER";
-    private final String USER_SERVICE="user-service";
-    private final static String URI_USER_SERVICE="lb://user-service";
-    
-    private final String PAYMENT_SERVICE="payment-service";
-    private final static String URI_PAYMENT_SERVICE="lb://payment-service";
-
-    private final String ORDER_SERVICE="order-service";
-    private final static String URI_ORDER_SERVICE="lb://order-service";
-
-    private final String GAMES_SERVICE="games-service";
-    private final static String URI_GAMES_SERVICE="lb://games-service";
-
-    private final String LIBRARY_SERVICE="library-service";
-    private final static String URI_LIBRARY_SERVICE="lb://library-service";
 
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {

@@ -26,6 +26,31 @@ spring:
 variables:
   ${SECRET_KEY:413F4428472B4BB6250655368566D5970337336763979244226452948404D6351}
 
+roles:
+  admin: ${ROLES_ADMIN:ADMIN}
+  user: ${ROLES_USER:USER}
+
+services:
+  user-service:
+    name: ${SERVICES_USER_NAME:user-service}
+    uri: ${SERVICES_USER_URI:lb://user-service}
+
+  payment-service:
+    name: ${SERVICES_PAYMENT_NAME:payment-service}
+    uri: ${SERVICES_PAYMENT_URI:lb://payment-service}
+
+  order-service:
+    name: ${SERVICES_ORDER_NAME:order-service}
+    uri: ${SERVICES_ORDER_URI:lb://order-service}
+
+  games-service:
+    name: ${SERVICES_GAMES_NAME:games-service}
+    uri: ${SERVICES_GAMES_URI:lb://games-service}
+
+  library-service:
+    name: ${SERVICES_LIBRARY_NAME:library-service}
+    uri: ${SERVICES_LIBRARY_URI:lb://library-service}
+
 management:
   endpoints:
     web:
