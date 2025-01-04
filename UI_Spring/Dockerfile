@@ -1,11 +1,12 @@
 #Build
 FROM node:18.19.1-alpine as build
 WORKDIR /app
+RUN npm install -g @angular/cli
 COPY package.json package-lock.json ./
 RUN npm install --force
 COPY . .
 EXPOSE 4200
-CMD ["ng", "s"]
+CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
 
 #Prod
 #RUN npm run build --prod

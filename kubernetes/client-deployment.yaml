@@ -14,9 +14,9 @@ spec:
     spec:
       containers:
       - name: client
-        image: chrayef/client:41
+        image: chrayef/client:55
         ports:
-        - containerPort: 80
+        - containerPort: 4200
         envFrom:
         - configMapRef:
             name: app-configmap
