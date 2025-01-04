@@ -11,13 +11,6 @@ spec:
   - host: 
     http:
         paths:
-        - path: /server/(.*)
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: gateway-service
-              port:
-                number: 8222
         - path: /(.*)
           pathType: ImplementationSpecific
           backend:
