@@ -68,13 +68,13 @@ env:
   - name: POSTGRES_USER
     valueFrom:
       secretKeyRef:
-        name: app-secrets
+        name: postgres-secrets
         key: postgresUsername
   # DATABASE PASSWORD
   - name: POSTGRES_PASSWORD
     valueFrom:
       secretKeyRef:
-        name: app-secrets
+        name: postgres-secrets
         key: postgresPassword
 
 
