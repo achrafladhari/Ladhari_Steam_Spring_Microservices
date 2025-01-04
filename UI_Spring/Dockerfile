@@ -4,8 +4,8 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install --force
 COPY . .
-EXPOSE 80
-CMD ["ng", "s", ""]
+EXPOSE 4200
+CMD ["ng", "s"]
 
 #Prod
 #RUN npm run build --prod

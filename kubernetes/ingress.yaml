@@ -8,19 +8,20 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$1
 spec:
   rules:
-    - http:
+  - host: 
+    http:
         paths:
-          - path: /api/(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: gateway-service
-                port:
-                  number: 8222
-          - path: /(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: client-service
-                port:
-                  number: 80
+        - path: /server/(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: gateway-service
+              port:
+                number: 8222
+        - path: /(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: client-service
+              port:
+                number: 80
