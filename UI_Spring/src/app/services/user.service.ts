@@ -51,7 +51,7 @@ export class UserService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${this.token}`,
     });
-    return this.http.delete(`${this.url}/${id}`,{headers});
+    return this.http.delete(`${this.url}${id}`,{headers});
   }
 
   updateByUsername( username:any,user:any){

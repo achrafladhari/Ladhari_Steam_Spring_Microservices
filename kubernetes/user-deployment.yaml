@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: user
-        image: chrayef/user-service:41
+        image: chrayef/user-service:68
         ports:
         - containerPort: 8090
         envFrom:

@@ -12,10 +12,10 @@ data:
   EUREKA_HOSTNAME_ORDER: order-service
   EUREKA_HOSTNAME_PAYMENT: payment-service
   EUREKA_HOSTNAME_USER: user-service
-  USER_URL: http://gateway-service:8222/api/v1/users
-  LIBRARY_URL: http://gateway-service:8222/api/v1/library
-  GAMES_URL: http://gateway-service:8222/api/v1/games
-  PAYMENT_URL: http://gateway-service:8222/api/v1/payments
+  USER_URL: http://gateway-service/api/v1/users
+  LIBRARY_URL: http://gateway-service/api/v1/library
+  GAMES_URL: http://gateway-service/api/v1/games
+  PAYMENT_URL: http://gateway-service/api/v1/payments
   DB_URL: jdbc:postgresql://postgres-service:5432/steam
   MONGO_HOST: mongodb-service
   UPLOADS_USER_DIR: app
