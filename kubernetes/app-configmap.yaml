@@ -18,4 +18,5 @@ data:
   PAYMENT_URL: http://gateway-service:8222/api/v1/payments
   DB_URL: jdbc:postgresql://postgres-service:5432/steam
   MONGO_HOST: mongodb-service
- # API_URL: projectdeachraf.
+  UPLOADS_USER_DIR: app
+  UPLOADS_GAMES_DIR: app

@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtService {
 
-    @Value("${variables.SECRET_KEY}")
-    private static String SECRET_KEY;
+    //@Value("${variables.SECRET_KEY}")
+    private static final String SECRET_KEY="413F4428472B4BB6250655368566D5970337336763979244226452948404D6351";
 
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(),userDetails);

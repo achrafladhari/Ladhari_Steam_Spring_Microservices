@@ -5,3 +5,5 @@ helm install my-ingress ingress-nginx/ingress-nginx -n ingress
 
 
 
+http://projectlastyear.francecentral.cloudapp.azure.com
+http://backendapp.francecentral.cloudapp.azure.com
