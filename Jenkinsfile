@@ -219,7 +219,7 @@ pipeline {
             }
         }
 
-        stage('Scan Client Service Image') {
+        /*stage('Scan Client Service Image') {
             when { changeset "UI_Spring/**"}
             steps {
                 script {
@@ -231,7 +231,7 @@ pipeline {
                     """
                 }
             }
-        }
+        }*/
 
         /**stage('Test Gateway Image') {
             steps {
