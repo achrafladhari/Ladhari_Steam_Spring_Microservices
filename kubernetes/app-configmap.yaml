@@ -20,3 +20,13 @@ data:
   MONGO_HOST: mongodb-service
   UPLOADS_USER_DIR: app
   UPLOADS_GAMES_DIR: app
+  SERVICES_USER_NAME: user-service
+  SERVICES_USER_URI: lb://user-service
+  SERVICES_PAYMENT_NAME: payment-service
+  SERVICES_PAYMENT_URI: lb://payment-service
+  SERVICES_ORDER_NAME: order-service
+  SERVICES_ORDER_URI: lb://order-service
+  SERVICES_GAMES_NAME: games-service
+  SERVICES_GAMES_URI: lb://games-service
+  SERVICES_LIBRARY_NAME: library-service
+  SERVICES_LIBRARY_URI: lb://library-service

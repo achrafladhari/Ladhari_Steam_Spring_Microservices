@@ -7,11 +7,11 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: nginx
+  repository: chrayef/gateway
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "71"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -52,9 +52,46 @@ securityContext: {}
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
 service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: ClusterIP
+  type: LoadBalancer
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 80
+  targetPort: 8222
+
+env: 
+  - name: EUREKA_HOSTNAME_GATEWAY
+    value: steam-gateway-service
+  - name: EUREKA_DEFAULT_ZONE
+    value: http://steam-discovery-service:8761/eureka
+  - name: CONFIG_SERVER_URL
+    value: optional:configserver:http://steam-configserver-service:8888
+
+    
+  - name: SERVICES_USER_NAME
+    value: steam-user-service
+  - name: SERVICES_USER_URI
+    value: lb://steam-user-service
+
+  - name: SERVICES_PAYMENT_NAME
+    value: steam-payment-service
+  - name: SERVICES_PAYMENT_URI
+    value: lb://steam-payment-service
+
+  - name: SERVICES_ORDER_NAME
+    value: steam-order-service
+  - name: SERVICES_ORDER_URI
+    value: lb://steam-order-service
+
+  - name: SERVICES_GAMES_NAME
+    value: steam-games-service
+  - name: SERVICES_GAMES_URI
+    value: lb://steam-games-service
+
+  - name: SERVICES_LIBRARY_NAME
+    value: steam-library-service
+  - name: SERVICES_LIBRARY_URI
+    value: lb://steam-library-service
+  
+
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:

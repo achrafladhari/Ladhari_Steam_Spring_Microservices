@@ -3,15 +3,15 @@
 # Declare variables to be passed into your templates.
 
 # This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+replicaCount: 2
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: nginx
+  repository: chrayef/user-service
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "68"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -54,8 +54,21 @@ service:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-  port: 80
-
+  port: 8090
+env: 
+  - name: CONFIG_SERVER_URL
+    value: optional:configserver:http://steam-configserver-service:8888 
+    
+  - name: EUREKA_DEFAULT_ZONE
+    value: http://steam-discovery-service:8761/eureka
+  - name: EUREKA_HOSTNAME_USER
+    value: steam-user-service
+  - name: UPLOADS_USER_DIR
+    value: app
+  - name: MONGO_HOST
+    value: steam-mongodb-service
+  - name: LIBRARY_URL
+    value: http://steam-gateway-service/api/v1/library
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
