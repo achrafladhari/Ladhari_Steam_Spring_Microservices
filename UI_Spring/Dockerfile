@@ -5,7 +5,7 @@ RUN npm install -g @angular/cli
 COPY package.json package-lock.json ./
 RUN npm install --force
 COPY . .
-RUN ng build --prod
+RUN ng build --configuration=production
 #EXPOSE 4200
 #CMD ["ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
 
