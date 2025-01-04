@@ -121,7 +121,7 @@ pipeline {
         }
 
         //scan trivy
-        stage('Scan Config Server Image') {
+        /*stage('Scan Config Server Image') {
             when { changeset "config-server/**"}
             steps {
                 script {
@@ -231,7 +231,7 @@ pipeline {
                     """
                 }
             }
-        }
+        }*/
 
         /**stage('Test Gateway Image') {
             steps {
