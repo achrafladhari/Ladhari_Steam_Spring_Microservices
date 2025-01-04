@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: client
-        image: chrayef/client:58
+        image: chrayef/client:59
         ports:
         - containerPort: 4200
         envFrom:
