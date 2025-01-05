@@ -57,8 +57,8 @@ service:
   port: 5432
 
 secrets:
-  postgresUsername: "cG9zdGdyZXMK"
-  postgresPassword: "cG9zdGdyZXMK"
+  postgresUsername: "postgres"
+  postgresPassword: "postgres"
 
 env:
   # DATABASE NAME
