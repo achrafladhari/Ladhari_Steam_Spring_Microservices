@@ -58,7 +58,7 @@ service:
 
 env: 
   - name: DB_URL
-    value: jdbc:postgresql://10.0.183.210:5432/steam
+    value: jdbc:postgresql://steam-postgresql-service:5432/steam
   - name: CONFIG_SERVER_URL
     value: optional:configserver:http://steam-configserver-service:8888 
   - name: EUREKA_HOSTNAME_PAYMENT
