@@ -526,7 +526,7 @@ pipeline {
                         }
                     }
                 }
-                def dirExists = sh(script: 'ls -d temp_repo 2>/dev/null | echo $(grep temp_repo)', returnStatus: true) == 0
+                def dirExists = sh(script: 'ls temp_repo 2>/dev/null | grep -q temp_repo', returnStatus: true) == 0
                 if (dirExists) {
                     sh 'rm -R temp_repo'
                 }
