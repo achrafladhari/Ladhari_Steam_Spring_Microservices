@@ -57,14 +57,14 @@ service:
   port: 8050
 
 env: 
+  - name: DB_URL
+    value: jdbc:postgresql://10.0.183.210:5432/steam
   - name: CONFIG_SERVER_URL
     value: optional:configserver:http://steam-configserver-service:8888 
   - name: EUREKA_HOSTNAME_PAYMENT
     value: steam-payment-service
   - name: EUREKA_DEFAULT_ZONE
     value: http://steam-discovery-service:8761/eureka
-  - name: DB_URL
-    value: jdbc:postgresql://steam-postgresql-service:5432/steam
   - name: GAMES_URL
     value: http://steam-gateway-service/api/v1/games
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
