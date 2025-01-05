@@ -292,8 +292,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                             }
@@ -317,8 +317,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                         }
@@ -342,8 +342,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                         }
@@ -367,8 +367,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                         }
@@ -392,8 +392,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                             }
                         }
@@ -417,8 +417,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                         }
@@ -442,8 +442,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                         }
@@ -467,8 +467,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                 }
                         }
@@ -492,8 +492,8 @@ pipeline {
                                     git add values.yaml
                                     git commit -m "Updated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
-                                    cd ../../../../..
-                                    rm -rf temp_repo
+                                    cd ../../../..
+                                    rm -R temp_repo
                                     """
                                     }
                         }
