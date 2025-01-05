@@ -102,14 +102,14 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /actuator/health 
-    port: 8222
+    port: http
   initialDelaySeconds: 240
   periodSeconds: 60
   timeoutSeconds: 30
 readinessProbe:
   httpGet:
     path: /actuator/health 
-    port: 8222
+    port: http
   initialDelaySeconds: 240
   periodSeconds: 30
   timeoutSeconds: 30
