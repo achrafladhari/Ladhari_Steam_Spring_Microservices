@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit {
       this.search();
     });
   }
-
   search(): void {
     this.name = this.searchForm.get('name')?.value;
     this._games.findByName(this.name, this.currentPage - 1, this.size).subscribe(
