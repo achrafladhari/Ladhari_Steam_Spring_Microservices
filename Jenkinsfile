@@ -34,24 +34,21 @@ pipeline {
                             credentialsId: 'github'
                         ]]
                     ])
-                    
-                    // Determine if the latest commit affects project_charts
+                    // Get the list of all changed files
                     def changes = sh(
-                        script: "git diff --name-only HEAD~1..HEAD | grep '^project_charts/' || true",
+                        script: "git diff --name-only HEAD~1..HEAD || true",
                         returnStdout: true
-                    ).trim()
-                    
-                    // Fail the pipeline if changes exist in project_charts
-                    if (changes) {
-                        echo "Changes detected in project_charts: ${changes}"
-                        echo "Skipping the pipeline."
-                        currentBuild.description = "Skipped: Changes in project_charts"
-                        // Set flag to skip pipeline
+                    ).trim().split("\n")
+                    echo "Changed files: ${changes}"
+                    // Check if all changes are inside project_charts
+                    def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') }
+                    if (onlyInProjectCharts) {
+                        echo "Changes are exclusively in project_charts. Skipping the pipeline."
+                        currentBuild.description = "Skipped: Changes only in project_charts"
                         env.SKIP_PIPELINE = true
                         return // Exit the pipeline
-                    } else {
-                        echo "No changes detected in project_charts. Proceeding with the build."
                     }
+                    echo "Changes are not limited to project_charts. Proceeding with the pipeline."
                 }
             }
         }
