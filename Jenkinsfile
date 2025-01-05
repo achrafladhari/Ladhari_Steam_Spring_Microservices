@@ -283,7 +283,16 @@ pipeline {
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/configserver/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/configserver
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                             }
                         }
@@ -297,7 +306,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/discovery/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/discovery
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -311,7 +329,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/gateway/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/gateway
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -325,7 +352,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/library/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/library
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -339,7 +375,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/user/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/user
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -353,7 +398,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/games/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/discovery
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' games.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -367,7 +421,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/order/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/order
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -381,7 +444,16 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/payment/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/payment
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
@@ -395,28 +467,20 @@ pipeline {
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh """
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/client/values.yaml'
+                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                cd temp_repo/project_charts/charts/client
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                git config user.name "Achraf Ladhari"
+                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                git add values.yaml
+                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                git push origin master
+                                cd ../../../../..
+                                rm -rf temp_repo
                                 """
                         }
                     }
             }
-        stage('Commit and Push Changes If There Is Changes') {
-            when {
-                    changeset "**/UI_Spring/**, **/config-server/**, **/discovery-service/**, **/games-service/**, **/order-service/**, **/payment-service/**, **/user-service/**, **/gateway/**, **/library-service/**"
-                }
-            steps {
-                script {
-                     sh 'echo "PUSH CHANGES TO GITHUB"'
-                    sh """
-                    git config user.name "Achraf Ladhari"
-                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                    git add .
-                    git commit -m "Updated tag to ${BUILD_ID} in helm charts"
-                    git push origin master
-                    """
-                }
-            }
-        }
     }
     //CLEAN UP !!
     post {
