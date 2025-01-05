@@ -281,19 +281,21 @@ pipeline {
                                     dockerImageConfigServer.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/configserver
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/configserver
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                             }
                         }
             }
@@ -304,19 +306,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageDiscoveryService.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/discovery
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/discovery
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                         }
                     }
             }
@@ -327,19 +331,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageGateway.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/gateway
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/gateway
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                         }
                     }
             }
@@ -350,19 +356,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageLibraryService.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/library
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/library
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                         }
                     }
             }
@@ -374,18 +382,20 @@ pipeline {
                                         dockerImageUserService.push()
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/user
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/user
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                            }
                         }
                     }
             }
@@ -396,19 +406,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageGamesService.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/discovery
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' games.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/discovery
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' games.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                         }
                     }
             }
@@ -419,19 +431,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageOrderService.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/order
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/order
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                         }
                     }
             }
@@ -442,19 +456,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImagePaymentService.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/payment
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/payment
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                }
                         }
                     }
             }
@@ -465,19 +481,21 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageFront.push()
                                 }
-                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            sh """
-                                git clone https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                cd temp_repo/project_charts/charts/client
-                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
-                                git config user.name "Achraf Ladhari"
-                                git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
-                                git add values.yaml
-                                git commit -m "Updated tag to ${BUILD_ID} in helm chart"
-                                git push origin master
-                                cd ../../../../..
-                                rm -rf temp_repo
-                                """
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github', keyFileVariable: 'SSH_KEY')]) {
+                                sh """
+                                    git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
+                                    cd temp_repo/project_charts/charts/client
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
+                                    git config user.name "Achraf Ladhari"
+                                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                                    git add values.yaml
+                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git push origin master
+                                    cd ../../../../..
+                                    rm -rf temp_repo
+                                    """
+                                    }
                         }
                     }
             }
