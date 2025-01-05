@@ -280,6 +280,11 @@ pipeline {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                     dockerImageConfigServer.push()
                                 }
+                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/configserver/values.yaml'
+                                """
                             }
                         }
             }
@@ -290,6 +295,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageDiscoveryService.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/discovery/values.yaml'
+                                """
                         }
                     }
             }
@@ -300,6 +309,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageGateway.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/gateway/values.yaml'
+                                """
                         }
                     }
             }
@@ -310,6 +323,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageLibraryService.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/library/values.yaml'
+                                """
                         }
                     }
             }
@@ -320,6 +337,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageUserService.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/user/values.yaml'
+                                """
                         }
                     }
             }
@@ -330,6 +351,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageGamesService.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/games/values.yaml'
+                                """
                         }
                     }
             }
@@ -340,6 +365,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageOrderService.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/order/values.yaml'
+                                """
                         }
                     }
             }
@@ -350,6 +379,10 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImagePaymentService.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/payment/values.yaml'
+                                """
                         }
                     }
             }
@@ -360,9 +393,30 @@ pipeline {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                         dockerImageFront.push()
                                 }
+                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
+                            sh """
+                                sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' 'https://github.com/achrafladhari/Ladhari_Steam_Spring_Microservices/tree/master/project_charts/charts/client/values.yaml'
+                                """
                         }
                     }
             }
+        stage('Commit and Push Changes If There Is Changes') {
+            when {
+                    changeset "**/UI_Spring/**, **/config-server/**, **/discovery-service/**, **/games-service/**, **/order-service/**, **/payment-service/**, **/user-service/**, **/gateway/**, **/library-service/**"
+                }
+            steps {
+                script {
+                     sh 'echo "PUSH CHANGES TO GITHUB"'
+                    sh """
+                    git config user.name "Achraf Ladhari"
+                    git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
+                    git add .
+                    git commit -m "Updated tag to ${BUILD_ID} in helm charts"
+                    git push origin master
+                    """
+                }
+            }
+        }
     }
     //CLEAN UP !!
     post {
