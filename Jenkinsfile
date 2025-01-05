@@ -433,7 +433,7 @@ pipeline {
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
-                                    cd temp_repo/project_charts/charts/discovery
+                                    cd temp_repo/project_charts/charts/games
                                     sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
@@ -552,9 +552,9 @@ pipeline {
                             }
                         }
                     }
-                    def dirExists = sh(script: 'ls temp_repo 2>/dev/null | grep -q temp_repo', returnStatus: true) == 0
+                    def dirExists = fileExists('temp_repo')
                     if (dirExists) {
-                        sh 'rm -R temp_repo'
+                        deleteDir()
                     }
                     echo 'Cleanup Successfully done!'
                 }
