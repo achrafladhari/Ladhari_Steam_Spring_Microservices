@@ -411,7 +411,7 @@ pipeline {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/discovery
-                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' games.yaml
+                                    sed -i '/^  tag: / s/: .*/: "${BUILD_ID}"/' values.yaml
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
@@ -525,6 +525,9 @@ pipeline {
                             sh "docker rmi -f ${imageId}"
                         }
                     }
+                }
+                if (fileExists('temp_repo') && fileType('temp_repo') == 'Directory') {
+                    sh 'rm -R temp_repo'
                 }
                 echo 'Cleanup Successfully done!'
             }
