@@ -24,20 +24,35 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: 'master']],
-                    userRemoteConfigs: [[
-                        url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
-                        credentialsId: 'github'
-                    ]],
-                    extensions: [
-                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                            [path: '**/*'],                 // Include all files and directories
-                            [path: '!project_charts/**']    // Exclude the project_charts directory and its contents
+                script {
+                    // Perform the Git checkout
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'master']],
+                        userRemoteConfigs: [[
+                            url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
+                            credentialsId: 'github'
                         ]]
-                    ]
-                ])
+                    ])
+                    
+                    // Determine if the latest commit affects project_charts
+                    def changes = sh(
+                        script: "git diff --name-only HEAD~1..HEAD | grep '^project_charts/' || true",
+                        returnStdout: true
+                    ).trim()
+                    
+                    // Fail the pipeline if changes exist in project_charts
+                    if (changes) {
+                        echo "Changes detected in project_charts: ${changes}"
+                        echo "Skipping the pipeline."
+                        currentBuild.description = "Skipped: Changes in project_charts"
+                        // Set flag to skip pipeline
+                        env.SKIP_PIPELINE = true
+                        return // Exit the pipeline
+                    } else {
+                        echo "No changes detected in project_charts. Proceeding with the build."
+                    }
+                }
             }
         }
         stage('Build Config Server Image') {
@@ -515,33 +530,37 @@ pipeline {
     post {
         always {
             script {
-                echo 'Cleanup phase!'
-
-                def imagesToCleanup = [
-                    'aquasec/trivy',
-                    "${IMAGE_NAME_CONFIG_SERVER}",
-                    "${IMAGE_NAME_DISCOVERY_SERVICE}",
-                    "${IMAGE_NAME_GATEWAY}",
-                    "${IMAGE_NAME_USER_SERVICE}",
-                    "${IMAGE_NAME_GAMES_SERVICE}",
-                    "${IMAGE_NAME_ORDER_SERVICE}",
-                    "${IMAGE_NAME_LIBRARY_SERVICE}",
-                    "${IMAGE_NAME_PAYMENT_SERVICE}",
-                    "${IMAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
-                ]
-                imagesToCleanup.each { imageName ->
-                    def imageIds = sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()
-                    if (imageIds) {
-                        imageIds.split('\n').each { imageId ->
-                            sh "docker rmi -f ${imageId}"
+                if (env.SKIP_PIPELINE == "true") {
+                    echo "Pipeline was skipped. No post actions required."
+                } else {
+                    echo "Pipeline completed. Running post actions."
+                    echo 'Cleanup phase!'
+                    def imagesToCleanup = [
+                        'aquasec/trivy',
+                        "${IMAGE_NAME_CONFIG_SERVER}",
+                        "${IMAGE_NAME_DISCOVERY_SERVICE}",
+                        "${IMAGE_NAME_GATEWAY}",
+                        "${IMAGE_NAME_USER_SERVICE}",
+                        "${IMAGE_NAME_GAMES_SERVICE}",
+                        "${IMAGE_NAME_ORDER_SERVICE}",
+                        "${IMAGE_NAME_LIBRARY_SERVICE}",
+                        "${IMAGE_NAME_PAYMENT_SERVICE}",
+                        "${IMAGE_NAME_FRONTEND}" // Fix typo to IMAGE_NAME_FRONTEND if needed
+                    ]
+                    imagesToCleanup.each { imageName ->
+                        def imageIds = sh(script: "docker images --filter=reference='${imageName}:*' -q", returnStdout: true).trim()
+                        if (imageIds) {
+                            imageIds.split('\n').each { imageId ->
+                                sh "docker rmi -f ${imageId}"
+                            }
                         }
                     }
+                    def dirExists = sh(script: 'ls temp_repo 2>/dev/null | grep -q temp_repo', returnStatus: true) == 0
+                    if (dirExists) {
+                        sh 'rm -R temp_repo'
+                    }
+                    echo 'Cleanup Successfully done!'
                 }
-                def dirExists = sh(script: 'ls temp_repo 2>/dev/null | grep -q temp_repo', returnStatus: true) == 0
-                if (dirExists) {
-                    sh 'rm -R temp_repo'
-                }
-                echo 'Cleanup Successfully done!'
             }
         }
     }
