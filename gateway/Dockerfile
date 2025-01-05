@@ -8,7 +8,6 @@ COPY pom.xml .
 COPY src ./src
 # Run the Maven build
 RUN mvn clean package -DskipTests
-
 # RUN STAGE
 FROM eclipse-temurin:17-jdk-alpine
 
