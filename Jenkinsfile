@@ -24,9 +24,20 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'master',
-                    url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
-                    credentialsId: 'github'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: 'master']],
+                    userRemoteConfigs: [[
+                        url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
+                        credentialsId: 'github'
+                    ]],
+                    extensions: [
+                        [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
+                            [path: '**/*'],                 // Include all files and directories
+                            [path: '!project_charts/**']    // Exclude the project_charts directory and its contents
+                        ]]
+                    ]
+                ])
             }
         }
         stage('Build Config Server Image') {
