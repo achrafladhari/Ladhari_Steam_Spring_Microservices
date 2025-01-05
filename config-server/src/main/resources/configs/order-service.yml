@@ -29,3 +29,11 @@ springdoc:
     path: /order/v3/api-docs
   swagger-ui:
     path: /order/swagger-ui.html
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always

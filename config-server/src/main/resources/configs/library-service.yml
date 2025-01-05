@@ -23,3 +23,12 @@ springdoc:
 
 server:
   port: 8020
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always

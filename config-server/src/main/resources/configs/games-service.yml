@@ -35,3 +35,12 @@ springdoc:
 
 uploads:
   dir: ${UPLOADS_GAMES_DIR:games-service/src/main/resources/static/uploads/games}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
