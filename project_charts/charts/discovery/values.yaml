@@ -60,7 +60,7 @@ env:
   - name: CONFIG_SERVER_URL
     value: optional:configserver:http://steam-configserver-service:8888 
   - name: EUREKA_HOSTNAME_DISCOVERY
-    value: steam-configserver-service
+    value: steam-discovery-service
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
   enabled: false
