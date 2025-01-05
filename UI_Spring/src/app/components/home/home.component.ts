@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
 import { GamesService } from '../../services/games.service';
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { ActivatedRoute, Router } from "@angular/router";
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class HomeComponent implements OnInit {
   games: any[] = [];
-  users: any[] = [];
-  res: any;
+  imageUrls: string[] = [];
   searchForm: FormGroup;
   name: any;
   itemsShowCount = 5;
@@ -52,11 +50,27 @@ export class HomeComponent implements OnInit {
         this.games = res.content;
         this.totalElements = res.totalElements;
         this.totalPages = Array.from({ length: res.totalPages }, (_, i) => i + 1);
+        this.fetchImages(); // Fetch images after the games are loaded
       },
       (err) => {
         console.error('Error fetching data:', err);
       }
     );
+  }
+
+  fetchImages(): void {
+    this.imageUrls = []; // Reset imageUrls array
+    this.games.forEach(game => {
+      this._games.GetGamesImages(game.id).subscribe(
+        (blob) => {
+          const imageUrl = URL.createObjectURL(blob);
+          this.imageUrls.push(imageUrl); // Store the image URL
+        },
+        (err) => {
+          console.error('Error fetching image:', err);
+        }
+      );
+    });
   }
 
   onItemsUpdated(count: number): void {
