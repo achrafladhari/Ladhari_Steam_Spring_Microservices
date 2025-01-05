@@ -26,7 +26,7 @@ pipeline {
             steps {
                 git branch: 'master',
                     url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
-                    credentialsId: 'github_ssh'
+                    credentialsId: 'github'
             }
         }
         stage('Build Config Server Image') {
@@ -282,7 +282,7 @@ pipeline {
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/configserver
@@ -307,7 +307,7 @@ pipeline {
                                         dockerImageDiscoveryService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/discovery
@@ -332,7 +332,7 @@ pipeline {
                                         dockerImageGateway.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/gateway
@@ -357,7 +357,7 @@ pipeline {
                                         dockerImageLibraryService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/library
@@ -382,7 +382,7 @@ pipeline {
                                         dockerImageUserService.push()
                                 }
                              sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/user
@@ -407,7 +407,7 @@ pipeline {
                                         dockerImageGamesService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/discovery
@@ -432,7 +432,7 @@ pipeline {
                                         dockerImageOrderService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/order
@@ -457,7 +457,7 @@ pipeline {
                                         dockerImagePaymentService.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/payment
@@ -482,7 +482,7 @@ pipeline {
                                         dockerImageFront.push()
                                 }
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
-                            withCredentials([sshUserPrivateKey(credentialsId: 'github_ssh', keyFileVariable: 'SSH_KEY')]) {
+                            withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
                                     git clone git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git temp_repo
                                     cd temp_repo/project_charts/charts/client
