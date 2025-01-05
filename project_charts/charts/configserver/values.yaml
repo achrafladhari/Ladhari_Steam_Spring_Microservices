@@ -89,14 +89,14 @@ resources: {}
 livenessProbe:
   httpGet:
     path: /
-    port: 8888
+    port: http
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
 readinessProbe:
   httpGet:
     path: /
-    port: 8888
+    port: http
   initialDelaySeconds: 30
   periodSeconds: 10
   timeoutSeconds: 5
