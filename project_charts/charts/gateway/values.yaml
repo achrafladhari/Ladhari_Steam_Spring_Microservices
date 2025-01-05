@@ -67,29 +67,29 @@ env:
 
     
   - name: SERVICES_USER_NAME
-    value: steam-user-service
+    value: user-service
   - name: SERVICES_USER_URI
-    value: lb://user-service
+    value: lb://steam-user-service
 
   - name: SERVICES_PAYMENT_NAME
-    value: steam-payment-service
+    value: payment-service
   - name: SERVICES_PAYMENT_URI
-    value: lb://payment-service
+    value: lb://steam-payment-service
 
   - name: SERVICES_ORDER_NAME
-    value: steam-order-service
+    value: order-service
   - name: SERVICES_ORDER_URI
-    value: lb://order-service
+    value: lb://steam-order-service
 
   - name: SERVICES_GAMES_NAME
-    value: steam-games-service
+    value: games-service
   - name: SERVICES_GAMES_URI
-    value: lb://games-service
+    value: lb://steam-games-service
 
   - name: SERVICES_LIBRARY_NAME
-    value: steam-library-service
+    value: library-service
   - name: SERVICES_LIBRARY_URI
-    value: lb://library-service
+    value: lb://steam-library-service
   
 
 
