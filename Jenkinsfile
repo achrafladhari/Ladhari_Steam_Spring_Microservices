@@ -526,7 +526,8 @@ pipeline {
                         }
                     }
                 }
-                if (fileExists('temp_repo') && fileType('temp_repo') == 'Directory') {
+                def dirExists = sh(script: 'ls -d temp_repo 2>/dev/null | echo $(grep temp_repo)', returnStatus: true) == 0
+                if (dirExists) {
                     sh 'rm -R temp_repo'
                 }
                 echo 'Cleanup Successfully done!'
