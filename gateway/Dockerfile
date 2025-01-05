@@ -13,8 +13,6 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
-
-# Copy the built JAR file from the builder stage
 COPY --from=builder /app/target/*.jar gateway.jar
 
 EXPOSE 8222
