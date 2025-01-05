@@ -290,7 +290,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -315,7 +315,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -340,7 +340,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -365,7 +365,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -390,7 +390,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -415,7 +415,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -440,7 +440,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -465,7 +465,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
@@ -490,7 +490,7 @@ pipeline {
                                     git config user.name "Achraf Ladhari"
                                     git config user.email "achrefbenechikh.eladhari@isitc.u-sousse.tn"
                                     git add values.yaml
-                                    git commit -m "Updated tag to ${BUILD_ID} in helm chart"
+                                    git commit -m "CustomUpdated tag to ${BUILD_ID} in helm chart"
                                     git push origin master
                                     cd ../../../..
                                     rm -R temp_repo
