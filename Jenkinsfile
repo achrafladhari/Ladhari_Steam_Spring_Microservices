@@ -27,12 +27,6 @@ pipeline {
                 git branch: 'master',
                     url: 'git@github.com:achrafladhari/Ladhari_Steam_Spring_Microservices.git',
                     credentialsId: 'github'
-                checkout([
-                   extensions: [
-                            [$class: 'SparseCheckoutPaths', sparseCheckoutPaths: [
-                                [path: '**/*', excludePath: 'project_charts/**/*']
-                            ]]] 
-                ])
             }
         }
         stage('Build Config Server Image') {
