@@ -4,6 +4,8 @@ metadata:
   name: {{ include "order.fullname" . }}
   labels:
     {{- include "order.labels" . | nindent 4 }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "7"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
