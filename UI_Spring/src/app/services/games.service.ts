@@ -31,7 +31,7 @@ export class GamesService {
 
     //get images!
     GetGamesImages(imageId:any): Observable<Blob>{
-      return this.http.get(`${this.gameUrl}${imageId}/image`,{responseType:'blob'});
+      return this.http.get(`${this.gameUrl}/${imageId}/image`,{responseType:'blob'});
     }
 
 
