@@ -41,7 +41,7 @@ pipeline {
                     ).trim().split("\n")
                     echo "Changed files: ${changes}"
                     // Check if all changes are inside project_charts
-                    def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') }
+                    def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') }
                     if (onlyInProjectCharts) {
                         echo "Changes are exclusively in project_charts or kuberenetes or screens. Skipping the pipeline."
                         currentBuild.description = "Skipped: Changes only in project_charts or kuberenetes or screens"
@@ -303,7 +303,6 @@ pipeline {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
                                     dockerImageConfigServer.push()
                                 }
-                            sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             sh 'echo "UPDATING TAG IN HELM CHARTS"'
                             withCredentials([sshUserPrivateKey(credentialsId: 'github_key', keyFileVariable: 'SSH_KEY')]) {
                                 sh """
