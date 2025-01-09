@@ -69,13 +69,13 @@ env:
   - name: DB_URL
     value: jdbc:postgresql://steam-postgres-service:5432/steam
   - name: USER_URL
-    value: http://steam-gateway/api/v1/users
+    value: http://steam-gateway-service/api/v1/users
   - name: GAMES_URL
-    value: http://steam-gateway/api/v1/games
+    value: http://steam-gateway-service/api/v1/games
   - name: PAYMENT_URL
-    value: http://steam-gateway/api/v1/payments
+    value: http://steam-gateway-service/api/v1/payments
   - name: LIBRARY_URL
-    value: http://steam-gateway/api/v1/library
+    value: http://steam-gateway-service/api/v1/library
   
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
