@@ -36,8 +36,8 @@ serviceAccount:
 # Pod annotations and labels
 podAnnotations:
   prometheus.io/scrape: "true"
-  prometheus.io/port: "8888"  # Replace with your application's metrics port if different
-  prometheus.io/path: "/actuator/prometheus"  # Default path for Prometheus scraping
+  prometheus.io/port: "8888"  
+  prometheus.io/path: "/actuator/prometheus"  
 # This is for setting Kubernetes Labels to a Pod.
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
@@ -59,8 +59,6 @@ service:
   type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 8888
-  serviceLabel: steam-configserver-service
-  jobName: steam-configserver-job
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
