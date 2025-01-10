@@ -35,7 +35,7 @@ spec:
             {{- end }}
             backend:
               service:
-                name: {{ include "client.fullname" $ }}
+                name: {{ include "client.fullname" $ }}-service
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}
