@@ -41,7 +41,7 @@ pipeline {
                     ).trim().split("\n")
                     echo "Changed files: ${changes}"
                     // Check if all changes are inside project_charts
-                    def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') }
+                    def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') || it.startsWith('ansible/') }
                     if (onlyInProjectCharts) {
                         echo "Changes are exclusively in project_charts or kuberenetes or screens. Skipping the pipeline."
                         currentBuild.description = "Skipped: Changes only in project_charts or kuberenetes or screens"

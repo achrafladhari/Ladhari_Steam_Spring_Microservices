@@ -1,13 +1,11 @@
-output "ip_address_master" {
-  value = azurerm_public_ip.pfe2024_public_ip.ip_address
-}
-output "ip_address_worker_1" {
-  value = azurerm_public_ip.pfe2024_worker_1_public_ip.ip_address
+output "aks_id" {
+  value = azurerm_kubernetes_cluster.aks.id
 }
 
-output "instance_master_name" {
-  value = azurerm_linux_virtual_machine.pfe2024_vm.name
+output "aks_fqdn" {
+  value = azurerm_kubernetes_cluster.aks.fqdn
 }
-output "instance_worker1_name" {
-  value = azurerm_linux_virtual_machine.worker2024_vm.name
+
+output "aks_node_rg" {
+  value = azurerm_kubernetes_cluster.aks.node_resource_group
 }
