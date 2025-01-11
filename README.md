@@ -258,11 +258,136 @@ The table provides a concise overview of available Swagger endpoints for various
 - [Feign](https://spring.io/projects/spring-cloud-openfeign) - Declarative REST client
 - [Eureka](https://spring.io/projects/spring-cloud-netflix) - Service discovery
 - [JWT](https://jwt.io/) - Token-based authentication
-- [Docker](https://docs.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
 
 ---
 
 # Docker And Docker Compose
+## Prerequisites
 
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Running the Application
+
+```
+docker-compose up -d
+```
+-  Access the application at:
+    - API Gateway: http://localhost:8222
+    - Eureka Dashboard: http://localhost:8761
+## Stopping the Application
+
+```
+docker-compose down
+```
+## Docker compose file
+### 1. **Config Server**
+- **Port**: 8888
+- **Description**: Centralized configuration management service.
+- **Health Check**: Checks for availability on port 8888.
+
+### 2. **Discovery Service (Eureka)**
+- **Port**: 8761
+- **Description**: Service registry to allow microservices to discover each other.
+- **Depends On**: Config Server (healthcheck).
+
+### 3. **Jenkins**
+- **Ports**: 8010 (UI), 50000 (Agent communication)
+- **Description**: CI/CD server for automating the build and deployment pipeline.
+- **Privileged**: Runs with Docker in Docker for building images.
+
+### 4. **API Gateway**
+- **Port**: 8222
+- **Description**: Gateway for routing requests to microservices.
+- **Depends On**: Discovery Service (healthcheck).
+
+### 5. **Games Service**
+- **Description**: Handles game-related data.
+- **Database**: PostgreSQL (connection URL).
+- **Depends On**: API Gateway (healthcheck).
+
+### 6. **Library Service**
+- **Description**: Manages the game library.
+- **Database**: MongoDB.
+- **Depends On**: API Gateway (healthcheck).
+
+### 7. **Order Service**
+- **Description**: Handles game orders.
+- **Depends On**: API Gateway (healthcheck).
+
+### 8. **Payment Service**
+- **Description**: Manages payment processing for orders.
+- **Depends On**: API Gateway (healthcheck).
+
+### 9. **User Service**
+- **Description**: Manages user data.
+- **Database**: MongoDB.
+- **Depends On**: API Gateway (healthcheck).
+
+### 10. **Client (UI)**
+- **Port**: 80
+- **Description**: Frontend UI for interacting with the microservices.
+- **Depends On**: User Service.
+
+### 11. **SonarQube**
+- **Port**: 9000
+- **Description**: Code quality analysis platform.
+- **Database**: PostgreSQL (connection URL).
+
+### 12. **MongoDB**
+- **Port**: 27017
+- **Description**: NoSQL database for services like Library and User.
+- **Environment Variables**: Mongo root username and password.
+
+### 13. **Mongo Express**
+- **Port**: 8081
+- **Description**: Web-based admin interface for MongoDB.
+- **Depends On**: MongoDB.
+
+### 14. **PostgreSQL**
+- **Port**: 5432
+- **Description**: Relational database for services like Games and Orders.
+- **Environment Variables**: PostgreSQL username and password.
+
+### 15. **pgAdmin**
+- **Port**: 5050
+- **Description**: Web-based admin interface for PostgreSQL.
+- **Depends On**: PostgreSQL.
+
+### Health Checks
+
+All services have health checks configured to ensure they are running properly. For example:
+
+- **Config Server**: Available on port 8888.
+- **Discovery Service (Eureka)**: Available on port 8761.
+- **API Gateway**: Available on port 8222.
+
+If any service fails the health check, Docker Compose will attempt to restart the service.
+
+### Volumes
+
+The following volumes are used to persist data across service restarts:
+
+- `mongo`: MongoDB data.
+- `postgres`: PostgreSQL data.
+- `pgadmin`: pgAdmin data.
+- `sonarqube_data`: SonarQube data.
+- `sonarqube_extensions`: SonarQube extensions.
+- `sonarqube_logs`: SonarQube logs.
+
+### Networks
+
+All services are connected to the `microservices` network, ensuring they can communicate with each other without exposing services externally unless specified.
+
+## Screens
+
+![Dockerfile Spring Boot (Backend)](screens/dockerfilebackend.png)
+![Dockerfile Angular (Frontend)](screens/dockerfilefrontend.png)
+![Docker Compose Services](screens/dockercomposeservice.png)
+![Docker Network and Volumes](screens/networks&volumes.png)
+![Docker Compose Services](screens/exempledesservices.png)
+
+---
+
+# 
 Achraf BEN CHEIKH LADHARI. © 2024 All rights reserved.

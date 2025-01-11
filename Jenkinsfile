@@ -40,13 +40,12 @@ pipeline {
                         returnStdout: true
                     ).trim().split("\n")
                     echo "Changed files: ${changes}"
-                    // Check if all changes are inside project_charts
                     def onlyInProjectCharts = changes.every { it.startsWith('project_charts/') || it.startsWith('kubernetes/') || it.startsWith('screens/') || it.startsWith('README.md') || it.startsWith('ansible/') }
                     if (onlyInProjectCharts) {
                         echo "Changes are exclusively in project_charts or kuberenetes or screens. Skipping the pipeline."
                         currentBuild.description = "Skipped: Changes only in project_charts or kuberenetes or screens"
                         env.SKIP_PIPELINE = true
-                        return // Exit the pipeline
+                        return
                     }
                     echo "Changes are not limited to project_charts or kuberenetes or screens. Proceeding with the pipeline."
                 }
@@ -144,7 +143,7 @@ pipeline {
         }
 
         //scan trivy
-        /*stage('Scan Config Server Image') {
+        stage('Scan Config Server Image') {
             when { changeset "config-server/**"}
             steps {
                 script {
@@ -167,6 +166,20 @@ pipeline {
                     -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}
+                    """
+                }
+            }
+        }
+
+        stage('Scan Payment Service Image') {
+            when { changeset "payment/**"}
+            steps {
+                script {
+                    sh """
+                    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    ${IMAGE_NAME_PAYMENT_SERVICE}:${BUILD_ID}
                     """
                 }
             }
@@ -254,9 +267,8 @@ pipeline {
                     """
                 }
             }
-        }*/
-
-        /**stage('Test Gateway Image') {
+        }
+        /*stage('Test Gateway Image') {
             steps {
                 dir('gateway') {
                     withEnv([
@@ -264,6 +276,7 @@ pipeline {
                         'EUREKA_DEFAULT_ZONE=http://discovery-service:8761/eureka'
                     ]) {
                         script {
+
                             sh '''
                                 mvn clean test verify sonar:sonar \
                                     -Dsonar.projectKey=gateway \

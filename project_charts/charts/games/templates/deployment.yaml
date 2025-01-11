@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "games.labels" . | nindent 4 }}
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
