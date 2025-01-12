@@ -1633,6 +1633,16 @@ This section outlines the steps to set up monitoring for your application using 
 - [Feign](https://spring.io/projects/spring-cloud-openfeign) - Declarative REST client
 - [Eureka](https://spring.io/projects/spring-cloud-netflix) - Service discovery
 - [JWT](https://jwt.io/) - Token-based authentication
+- [Docker](https://docs.docker.com/) - Containerisation
+- [Jenkins](https://www.jenkins.io/doc/) - Pipeline CI/CD
+- [Kubernetes](https://kubernetes.io/docs/home/) - Orchestration
+- [Terraform](https://developer.hashicorp.com/terraform/docs) - Build infrastructure
+- [Ansible](https://docs.ansible.com/) - Ansible playbooks
+- [Helm](https://helm.sh/docs/) - Package Manager for Kubernetes
+- [ArgoCD](https://argo-cd.readthedocs.io/en/stable/) - Kubernetes controller
+- [Prometheus](https://prometheus.io/docs/introduction/overview/) - Metrics
+- [Grafana](https://grafana.com/docs/) - Dashboards
+- [Azure](https://learn.microsoft.com/en-us/azure/) - Cloud
 
 ---
 Achraf BEN CHEIKH LADHARI. © 2024 All rights reserved.
