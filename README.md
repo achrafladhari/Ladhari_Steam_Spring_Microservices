@@ -100,7 +100,7 @@ This platform provides an intuitive way for users to manage their game library, 
 ![Architecture Diagram](screens/architecture_final.png)
 
 ### Infrastructure Diagram
-
+**PS**: There is 2 resource groups in real terms one for AKS and the other contains public ip's, machines, resources for machines ..etc but to simplify the architecture i just put one rg, the other rg named : agentsRG
 ![Infrastructure Diagram](screens/infra.png)
 
 ### Class Diagram
