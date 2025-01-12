@@ -912,6 +912,108 @@ This will remove the AKS cluster and all associated resources.
 
 ---
 
+# Kubernetes Install and Configuration in local (minikube)
+
+PS : I will not deploy in my local machine because i don't have resources that can run the project, but i will write the steps.
+## Prerequisites
+- **Docker** installed on your machine.
+
+## **Setup Instructions**
+
+### **Step 1: Install kubectl**
+```bash
+sudo snap install kubectl --classic
+kubectl version --client
+```
+### **Step 2: Install minikube**
+```bash
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+minikube start
+```
+### **Step 3: Apply ConfigMap and Secrets**
+Apply shared configurations and secrets:
+```bash
+kubectl apply -f app-configmap.yaml
+kubectl apply -f app-secrets.yaml
+```
+
+### **Step 4: Deploy Databases**
+Deploy MongoDB and PostgreSQL:
+```bash
+kubectl apply -f mongodb-deployment.yaml
+kubectl apply -f mongodb-service.yaml
+kubectl apply -f postgres-deployment.yaml
+kubectl apply -f postgres-service.yaml
+```
+
+### **Step 5: Deploy Microservices**
+Deploy backend and frontend services:
+```bash
+kubectl apply -f discovery-deployment.yaml
+kubectl apply -f discovery-service.yaml
+kubectl apply -f configserver-deployment.yaml
+kubectl apply -f configserver-service.yaml
+kubectl apply -f <service-name>-deployment.yaml
+kubectl apply -f <service-name>-service.yaml
+```
+
+### **Step 6: get URL'S**
+Get url's backend and frontend services:
+```bash
+minikube service client-service --url
+minikube service gateway-service --url
+minikube service discovery-service --url
+```
+
+### **Step 7: ArgoCD**
+Deploy ArgoCD in minikube cluster:
+```bash
+kubectl create ns argocd 
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl edit svc argocd-server -n argocd "change ClusterIP to LoadBalancer"
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d ; echo
+minikube service argocd-server --url
+```
+
+### **Step 8: Prometheus**
+Deploy Prometheus in minikube cluster:
+```bash
+kubectl create ns monitoring
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add kube-state-metrics https://kubernetes.github.io/kube-state-metrics
+helm repo update
+helm install \
+--namespace=monitoring \
+--version=26.0.0 \
+--set=service.type=LoadBalancer \
+prometheus \
+prometheus-community/prometheus
+kubectl edit svc prometheus-server -n monitoring "change ClusterIP to LoadBalancer"
+minikube service prometheus-server --url
+```
+
+### **Step 9: Grafana**
+Deploy Grafana in minikube cluster:
+```bash
+kubectl apply -n monitoring -f monitoring-secrets.yaml
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+helm install \
+--namespace=monitoring \
+--version=8.6.4 \
+--set=admin.existingSecret=grafana-auth \
+--set=service.type=LoadBalancer \
+grafana \
+grafana/grafana
+kubectl get secret --namespace monitoring grafana-auth -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+minikube service grafana --url
+```
+
+### **Step 10: Monitoring**
+This step is adding data source "prometheus" in grafana so it will be the same thing in the last step
+
+---
 # Kubernetes Configuration with Ansible Playbook (AKS)
 
 This guide walks you through deploying ArgoCD, Prometheus, and Grafana in your Kubernetes cluster using an Ansible playbook. It also includes the configuration of the necessary namespaces and services, including the setup of external load balancers.
@@ -1643,6 +1745,8 @@ This section outlines the steps to set up monitoring for your application using 
 - [Prometheus](https://prometheus.io/docs/introduction/overview/) - Metrics
 - [Grafana](https://grafana.com/docs/) - Dashboards
 - [Azure](https://learn.microsoft.com/en-us/azure/) - Cloud
+- [Minikube](https://minikube.sigs.k8s.io/docs/) - Local cluster
 
 ---
+
 Achraf BEN CHEIKH LADHARI. © 2024 All rights reserved.
