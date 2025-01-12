@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "library.labels" . | nindent 4 }}
   annotations:
-    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
