@@ -397,10 +397,6 @@ All services are connected to the `microservices` network, ensuring they can com
 
 ---
 
-Got it! Here’s a complete `README` style document for the entire process, including all the steps with the appropriate Docker commands and configuration instructions.
-
----
-
 # Jenkins
 
 ## Step 1: Install Jenkins in Docker
