@@ -156,7 +156,6 @@ pipeline {
                 }
             }
         }
-
         stage('Scan Discovery Service Image') {
             //when { changeset "discovery-service/**"}
             steps {
