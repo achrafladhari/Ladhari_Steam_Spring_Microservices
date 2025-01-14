@@ -144,7 +144,7 @@ pipeline {
 
         //scan trivy
         stage('Scan Config Server Image') {
-            when { changeset "con//whenfig-server/**"}
+            when { changeset "config-server/**"}
             steps {
                 script {
                     sh """
