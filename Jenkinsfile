@@ -52,7 +52,7 @@ pipeline {
             }
         }
         stage('Build Config Server Image') {
-            //when { changeset "config-server/**"}
+            when { changeset "config-server/**"}
             steps {
                 dir('config-server') {
                     script {
@@ -62,7 +62,7 @@ pipeline {
             }
         }
         stage('Build Discovery Service Image') {
-            //when { changeset "discovery-service/**"}
+            when { changeset "discovery-service/**"}
             steps {
                 dir('discovery-service') {
                     script {
@@ -72,7 +72,7 @@ pipeline {
             }
         }
         stage('Build Gateway Image') {
-            //when { changeset "gateway/**"}
+            when { changeset "gateway/**"}
             steps {
                 dir('gateway') {
                     script {
@@ -82,7 +82,7 @@ pipeline {
             }
         }
         stage('Build User Image') {
-            //when { changeset "user-service/**"}
+            when { changeset "user-service/**"}
             steps {
                 dir('user-service') {
                     script {
@@ -92,7 +92,7 @@ pipeline {
             }
         }
         stage('Build Games Image') {
-            //when { changeset "games-service/**"}
+            when { changeset "games-service/**"}
             steps {
                 dir('games-service') {
                     script {
@@ -102,7 +102,7 @@ pipeline {
             }
         }
         stage('Build Order Image') {
-            //when { changeset "order-service/**"}
+            when { changeset "order-service/**"}
             steps {
                 dir('order-service') {
                     script {
@@ -112,7 +112,7 @@ pipeline {
             }
         }
         stage('Build Library Image') {
-            //when { changeset "library-service/**"}
+            when { changeset "library-service/**"}
             steps {
                 dir('library-service') {
                     script {
@@ -122,7 +122,7 @@ pipeline {
             }
         }
         stage('Build Payment Image') {
-            //when { changeset "payment-service/**"}
+            when { changeset "payment-service/**"}
             steps {
                 dir('payment-service') {
                     script {
@@ -132,7 +132,7 @@ pipeline {
             }
         }
         stage('Build FrontEnd Image') {
-            //when { changeset "UI_Spring/**"}
+            when { changeset "UI_Spring/**"}
             steps {
                 dir('UI_Spring') {
                     script {
@@ -144,7 +144,7 @@ pipeline {
 
         //scan trivy
         stage('Scan Config Server Image') {
-            //when { changeset "config-server/**"}
+            when { changeset "con//whenfig-server/**"}
             steps {
                 script {
                     sh """
@@ -158,7 +158,7 @@ pipeline {
         }
 
         stage('Scan Discovery Service Image') {
-            //when { changeset "discovery-service/**"}
+            when { changeset "discovery-service/**"}
             steps {
                 script {
                     sh """
@@ -172,7 +172,7 @@ pipeline {
         }
 
         stage('Scan Payment Service Image') {
-            //when { changeset "payment/**"}
+            when { changeset "payment/**"}
             steps {
                 script {
                     sh """
@@ -186,7 +186,7 @@ pipeline {
         }
 
         stage('Scan Gateway Image') {
-            //when { changeset "gateway/**"}
+            when { changeset "gateway/**"}
             steps {
                 script {
                     sh """
@@ -200,7 +200,7 @@ pipeline {
         }
 
         stage('Scan Games Service Image') {
-            //when { changeset "games-service/**"}
+            when { changeset "games-service/**"}
             steps {
                 script {
                     sh """
@@ -214,7 +214,7 @@ pipeline {
         }
 
         stage('Scan User Service Image') {
-            //when { changeset "user-service/**"}
+            when { changeset "user-service/**"}
             steps {
                 script {
                     sh """
@@ -228,7 +228,7 @@ pipeline {
         }
 
         stage('Scan Library Service Image') {
-            //when { changeset "library-service/**"}
+            when { changeset "library-service/**"}
             steps {
                 script {
                     sh """
@@ -242,7 +242,7 @@ pipeline {
         }
 
         stage('Scan Order Service Image') {
-            //when { changeset "order-service/**"}
+            when { changeset "order-service/**"}
             steps {
                 script {
                     sh """
@@ -256,7 +256,7 @@ pipeline {
         }
 
         stage('Scan Client Service Image') {
-            //when { changeset "UI_Spring/**"}
+            when { changeset "UI_Spring/**"}
             steps {
                 script {
                     sh """
@@ -310,7 +310,7 @@ pipeline {
                     }
                 }*/
         stage('Push Config Server Image to Docker Hub') {
-            //when { changeset "config-server/**"}
+            when { changeset "config-server/**"}
                 steps {
                     script {
                             docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -335,7 +335,7 @@ pipeline {
                         }
             }
         stage('Push Discovery Service Image to Docker Hub') {
-            //when { changeset "discovery-service/**"}
+            when { changeset "discovery-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -360,7 +360,7 @@ pipeline {
                     }
             }
         stage('Push Gateway Image to Docker Hub') {
-            //when { changeset "gateway/**"}
+            when { changeset "gateway/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -385,7 +385,7 @@ pipeline {
                     }
             }
         stage('Push Library Service Image to Docker Hub') {
-            //when { changeset "library-service/**"}
+            when { changeset "library-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -410,7 +410,7 @@ pipeline {
                     }
             }
         stage('Push User Service Image to Docker Hub') {
-            //when { changeset "user-service/**"}
+            when { changeset "user-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -435,7 +435,7 @@ pipeline {
                     }
             }
         stage('Push Games Service Image to Docker Hub') {
-            //when { changeset "games-service/**"}
+            when { changeset "games-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -460,7 +460,7 @@ pipeline {
                     }
             }
         stage('Push Order Service Image to Docker Hub') {
-            //when { changeset "order-service/**"}
+            when { changeset "order-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -485,7 +485,7 @@ pipeline {
                     }
             }
         stage('Push Payment Service Image to Docker Hub') {
-            //when { changeset "payment-service/**"}
+            when { changeset "payment-service/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
@@ -510,7 +510,7 @@ pipeline {
                     }
             }
         stage('Push FRONTEND Image to Docker Hub') {
-            //when { changeset "UI_Spring/**"}
+            when { changeset "UI_Spring/**"}
                 steps {
                     script {
                                 docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
