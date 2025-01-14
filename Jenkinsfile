@@ -149,20 +149,21 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_CONFIG_SERVER}:${BUILD_ID}
                     """
                 }
             }
         }
+
         stage('Scan Discovery Service Image') {
             //when { changeset "discovery-service/**"}
             steps {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_DISCOVERY_SERVICE}:${BUILD_ID}
                     """
@@ -176,7 +177,7 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_PAYMENT_SERVICE}:${BUILD_ID}
                     """
@@ -190,7 +191,7 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_GATEWAY}:${BUILD_ID}
                     """
@@ -204,8 +205,8 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
-                    aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 30m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_GAMES_SERVICE}:${BUILD_ID}
                     """
                 }
@@ -218,7 +219,7 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_USER_SERVICE}:${BUILD_ID}
                     """
@@ -232,7 +233,7 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_LIBRARY_SERVICE}:${BUILD_ID}
                     """
@@ -246,8 +247,8 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
-                    aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
+                    aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 30m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_ORDER_SERVICE}:${BUILD_ID}
                     """
                 }
@@ -260,7 +261,7 @@ pipeline {
                 script {
                     sh """
                     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \\
-                    -e TRIVY_DB_REPO=https://github.com/aquasecurity/trivy-db/releases  \\
+                    -e TRIVY_DB_REPO=ghcr.io/aquasecurity/trivy-db \\
                     aquasec/trivy:latest image --exit-code 0 --scanners vuln --no-progress --timeout 20m --severity LOW,MEDIUM,HIGH,CRITICAL \\
                     ${IMAGE_NAME_FRONTEND}:${BUILD_ID}
                     """
