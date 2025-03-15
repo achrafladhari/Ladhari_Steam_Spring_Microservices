@@ -63,7 +63,7 @@ env:
   - name: CONFIG_SERVER_URL
     value: optional:configserver:http://steam-configserver-service:8888 
   - name: DB_URL 
-    value: jdbc:postgresql://steam-postgres-service:5432/steam
+    value: jdbc:postgresql://pgsql-postgresql:5432/steam
   - name: EUREKA_HOSTNAME_GAMES
     value: steam-games-service
   - name: EUREKA_DEFAULT_ZONE
